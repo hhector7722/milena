@@ -1,0 +1,66 @@
+[
+  {
+    "__EMPTY": "Milena",
+    "__EMPTY_7": "Factura"
+  },
+  {
+    "__EMPTY": "González",
+    "__EMPTY_7": "Número:",
+    "__EMPTY_8": "25-001"
+  },
+  {
+    "__EMPTY_7": "Data:",
+    "__EMPTY_8": 45591
+  },
+  {
+    "__EMPTY_1": "DE:",
+    "__EMPTY_6": "PER  A:"
+  },
+  {
+    "__EMPTY_1": "Milena González Villacampa",
+    "__EMPTY_6": "Nom i Cognoms"
+  },
+  {
+    "__EMPTY_1": "NIF 46355789W",
+    "__EMPTY_6": "NIF "
+  },
+  {
+    "__EMPTY_1": "Travessera de Gràcia, 421 5-1",
+    "__EMPTY_6": "Adreça"
+  },
+  {
+    "__EMPTY_1": "08025 Barcelona",
+    "__EMPTY_6": "CP  Ciutat"
+  },
+  {
+    "__EMPTY_1": "Concepte",
+    "__EMPTY_5": "Quantitat",
+    "__EMPTY_6": "Preu",
+    "__EMPTY_7": "Subtotal"
+  },
+  {
+    "__EMPTY_1": "Mioteràpia",
+    "__EMPTY_5": 2,
+    "__EMPTY_6": 41.33,
+    "__EMPTY_7": 82.66
+  },
+  {
+    "__EMPTY_1": "Cangur",
+    "__EMPTY_5": 3,
+    "__EMPTY_6": 25,
+    "__EMPTY_7": 75
+  },
+  {
+    "__EMPTY_5": "BASE IMPONIBLE",
+    "__EMPTY_7": 157.66
+  },
+  {
+    "__EMPTY_5": "IVA",
+    "__EMPTY_6": 0.21,
+    "__EMPTY_7": 33.108599999999996
+  },
+  {
+    "__EMPTY_5": "TOTAL ",
+    "__EMPTY_7": 190.7686
+  }
+]

@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 201 24% 29%;
+    /* #2F5468 */
+    --foreground: 205 30% 15%;
+    /* Darker foreground for readability inside white components */
+    --card: 0 0% 100%;
+    --card-foreground: 205 30% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 205 30% 15%;
+    --primary: 201 24% 29%;
+    /* #2F5468 */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 205 30% 90%;
+    --secondary-foreground: 205 30% 15%;
+    --muted: 205 30% 90%;
+    --muted-foreground: 205 10% 40%;
+    --accent: 201 24% 29%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 205 30% 80%;
+    --input: 205 30% 80%;
+    --ring: 201 24% 29%;
+    --radius: 1rem;
+  }
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: #2F5468;
+  color: white;
+  /* Specifically make body text white for the blue background */
+  -webkit-tap-highlight-color: transparent;
+  min-height: 100vh;
+}
+
+.ios-blur {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.shadow-soft {
+  box-shadow: 0 4px 20px -10px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes bounce-subtle {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 3s ease-in-out infinite;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
