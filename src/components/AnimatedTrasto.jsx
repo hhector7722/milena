@@ -19,8 +19,8 @@ export const AnimatedTrasto = ({ className = "" }) => {
                 const checkPlaying = () => {
                     if (next.currentTime > 0.25) {
                         setActiveVideo(mode === 'normal' ? 'reverse' : 'normal')
-                        // Hold the "isSwapping" blur state for a brief moment
-                        setTimeout(() => setIsSwapping(false), 400)
+                        // Short guard time to prevent double-trigger
+                        setTimeout(() => setIsSwapping(false), 100)
                     } else {
                         requestAnimationFrame(checkPlaying)
                     }
@@ -70,7 +70,7 @@ export const AnimatedTrasto = ({ className = "" }) => {
                     muted
                     playsInline
                     preload="auto"
-                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-opacity duration-300 ${activeVideo === 'normal' ? 'z-30 opacity-100' : 'z-10 opacity-0'}`}
+                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen ${activeVideo === 'normal' ? 'z-30 opacity-100' : 'z-10 opacity-0'}`}
                 />
                 <video
                     ref={videoReverseRef}
@@ -78,7 +78,7 @@ export const AnimatedTrasto = ({ className = "" }) => {
                     muted
                     playsInline
                     preload="auto"
-                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-opacity duration-300 ${activeVideo === 'reverse' ? 'z-30 opacity-100' : 'z-10 opacity-0'}`}
+                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen ${activeVideo === 'reverse' ? 'z-30 opacity-100' : 'z-10 opacity-0'}`}
                 />
             </div>
         </div>
