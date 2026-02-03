@@ -1,10 +1,9 @@
-```
 import React from 'react'
 
 export const AnimatedTrasto = ({ className = "" }) => {
     return (
-        <div className={`relative select - none ${ className } `} 
-             style={{ userSelect: 'none', WebkitUserSelect: 'none' }}>
+        <div className={`relative select-none ${className}`}
+            style={{ userSelect: 'none', WebkitUserSelect: 'none' }}>
             <div
                 className="absolute inset-0 z-20"
                 style={{
@@ -27,4 +26,3 @@ export const AnimatedTrasto = ({ className = "" }) => {
         </div>
     )
 }
-```
