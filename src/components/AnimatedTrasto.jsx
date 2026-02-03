@@ -2,26 +2,34 @@ import React, { useState, useEffect, useRef } from 'react'
 
 export const AnimatedTrasto = ({ className = "" }) => {
     const [activeVideo, setActiveVideo] = useState('normal') // 'normal' or 'reverse'
+    const [isTransitioning, setIsTransitioning] = useState(false)
     const videoNormalRef = useRef(null)
     const videoReverseRef = useRef(null)
     const requestRef = useRef()
 
     const startNext = (mode) => {
+        if (isTransitioning) return
+
         const next = mode === 'normal' ? videoReverseRef.current : videoNormalRef.current
         if (next) {
-            next.currentTime = 0.05 // Skip potential black frame at start
+            setIsTransitioning(true)
+            next.currentTime = 0.1 // Skip start-to-end gaps
             next.play().then(() => {
                 setActiveVideo(mode === 'normal' ? 'reverse' : 'normal')
-            }).catch(() => { })
+                // Keep the blur/transition state for the duration of the CSS transition
+                setTimeout(() => setIsTransitioning(false), 1000)
+            }).catch(() => {
+                setIsTransitioning(false)
+            })
         }
     }
 
     const checkTime = () => {
         const current = activeVideo === 'normal' ? videoNormalRef.current : videoReverseRef.current
-        if (current && current.duration) {
+        if (current && current.duration && !isTransitioning) {
             const timeLeft = current.duration - current.currentTime
-            // Trigger 0.6s before end to match the 600ms transition
-            if (timeLeft < 0.6) {
+            // Trigger 1s before to allow for a smooth 1s cross-fade
+            if (timeLeft < 1.0) {
                 startNext(activeVideo)
             }
         }
@@ -32,10 +40,11 @@ export const AnimatedTrasto = ({ className = "" }) => {
         requestRef.current = requestAnimationFrame(checkTime)
         if (videoNormalRef.current) videoNormalRef.current.play().catch(() => { })
         return () => cancelAnimationFrame(requestRef.current)
-    }, [activeVideo])
+    }, [activeVideo, isTransitioning])
 
     return (
-        <div className={`relative select-none ${className}`} style={{ userSelect: 'none', WebkitUserSelect: 'none' }}>
+        <div className={`relative select-none transition-all duration-1000 ${className} ${isTransitioning ? 'blur-[3px] scale-[1.02]' : 'blur-0 scale-100'}`}
+            style={{ userSelect: 'none', WebkitUserSelect: 'none' }}>
             <div
                 className="absolute inset-0 z-20"
                 style={{
@@ -50,7 +59,7 @@ export const AnimatedTrasto = ({ className = "" }) => {
                     muted
                     playsInline
                     preload="auto"
-                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-opacity duration-[600ms] ease-in-out ${activeVideo === 'normal' ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
+                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-all duration-1000 ease-in-out ${activeVideo === 'normal' ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
                 />
                 <video
                     ref={videoReverseRef}
@@ -58,7 +67,7 @@ export const AnimatedTrasto = ({ className = "" }) => {
                     muted
                     playsInline
                     preload="auto"
-                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-opacity duration-[600ms] ease-in-out ${activeVideo === 'reverse' ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
+                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-all duration-1000 ease-in-out ${activeVideo === 'reverse' ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
                 />
             </div>
         </div>
