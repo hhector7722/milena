@@ -24,7 +24,7 @@ export const AnimatedTrasto = ({ className = "", showShadow = true }) => {
             {/* Animation Wrapper */}
             <div className={`absolute inset-0 z-20 ${showShadow ? 'animate-bounce-subtle' : 'animate-bounce-subtle'}`}>
                 <div
-                    className={`absolute inset-0 ${showShadow ? 'translate-y-[12px] rounded-3xl overflow-hidden' : 'translate-y-[8px] sm:translate-y-[12px]'}`}
+                    className={`absolute inset-0 ${showShadow ? 'translate-y-[12px] rounded-3xl overflow-hidden' : 'translate-y-[15px] sm:translate-y-[20px]'}`}
                     style={{
                         WebkitMaskImage: showShadow
                             ? 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)'

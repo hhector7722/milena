@@ -8,7 +8,7 @@ const Header = ({ searchTerm, setSearchTerm }) => (
     <header className="sticky top-0 z-50 bg-[#2F5468] border-b border-white/20 px-6 py-0 flex items-start justify-between shadow-[0_15px_40px_rgba(0,0,0,0.6)] backdrop-blur-sm">
         <div className="flex items-start gap-6 sm:gap-10 h-32 sm:h-44">
             {/* LARGE ANIMATED LOGO - Resting on the border */}
-            <div className="relative group cursor-pointer overflow-visible shrink-0 h-full">
+            <div className="relative group cursor-pointer overflow-visible shrink-0 h-full flex items-end">
                 <AnimatedTrasto
                     showShadow={false}
                     className="w-28 h-28 sm:w-36 sm:h-36 hover:scale-105 transition-transform duration-300"
