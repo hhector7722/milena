@@ -39,10 +39,8 @@ export const AnimatedTrasto = ({ className = "" }) => {
                     muted
                     playsInline
                     preload="auto"
-                    onEnded={() => {
-                        setIsReversed(true)
-                    }}
-                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen ${!isReversed ? 'opacity-100' : 'opacity-0'}`}
+                    onEnded={() => setIsReversed(true)}
+                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-opacity duration-300 ${!isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
                 />
                 <video
                     ref={videoReverseRef}
@@ -50,10 +48,8 @@ export const AnimatedTrasto = ({ className = "" }) => {
                     muted
                     playsInline
                     preload="auto"
-                    onEnded={() => {
-                        setIsReversed(false)
-                    }}
-                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen ${isReversed ? 'opacity-100' : 'opacity-0'}`}
+                    onEnded={() => setIsReversed(false)}
+                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-opacity duration-300 ${isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
                 />
             </div>
         </div>
