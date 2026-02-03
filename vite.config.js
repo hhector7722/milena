@@ -13,7 +13,7 @@ export default defineConfig({
       manifest: {
         name: 'Milena González',
         short_name: 'Milena',
-        description: 'Adiestrament caní',
+        description: 'Especialista en comportament caní',
         theme_color: '#ffffff',
         background_color: '#ffffff',
         display: 'standalone',
