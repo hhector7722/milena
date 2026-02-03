@@ -51,7 +51,7 @@ export const AnimatedTrasto = ({ className = "" }) => {
     }, [activeVideo, isSwapping])
 
     return (
-        <div className={`relative select-none transition-all duration-500 ease-in-out ${className} ${isSwapping ? 'blur-[4px] scale-[1.03]' : 'blur-0 scale-100'}`}
+        <div className={`relative select-none ${className}`}
             style={{ userSelect: 'none', WebkitUserSelect: 'none' }}>
             <div
                 className="absolute inset-0"
