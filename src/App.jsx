@@ -9,7 +9,10 @@ const Header = ({ searchTerm, setSearchTerm }) => (
         <div className="flex items-start gap-6 sm:gap-10 h-32 sm:h-44">
             {/* LARGE ANIMATED LOGO - Resting on the border */}
             <div className="relative group cursor-pointer overflow-visible shrink-0 h-full">
-                <AnimatedTrasto className="w-32 h-32 sm:w-44 sm:h-44 hover:scale-105 transition-transform duration-300" />
+                <AnimatedTrasto
+                    showShadow={false}
+                    className="w-32 h-32 sm:w-44 sm:h-44 hover:scale-105 transition-transform duration-300"
+                />
             </div>
 
             {/* GREETING + SEARCH STACK - Centered vertically */}

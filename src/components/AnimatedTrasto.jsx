@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 
-export const AnimatedTrasto = ({ className = "" }) => {
+export const AnimatedTrasto = ({ className = "", showShadow = true }) => {
     const [isReversed, setIsReversed] = useState(false)
     const videoNormalRef = useRef(null)
     const videoReverseRef = useRef(null)
@@ -17,12 +17,14 @@ export const AnimatedTrasto = ({ className = "" }) => {
             style={{ userSelect: 'none', WebkitUserSelect: 'none' }}>
 
             {/* Enhanced Shadow base - Defines the "floor" */}
-            <div className="absolute inset-0 rounded-3xl shadow-[0_48px_100px_-12px_rgba(0,0,0,0.8)] z-0" />
+            {showShadow && (
+                <div className="absolute inset-0 rounded-3xl shadow-[0_48px_100px_-12px_rgba(0,0,0,0.8)] z-0" />
+            )}
 
             {/* Animation Wrapper */}
             <div className="absolute inset-0 z-20 animate-bounce-subtle">
                 <div
-                    className="absolute inset-0 translate-y-[12px] rounded-3xl overflow-hidden"
+                    className={`absolute inset-0 ${showShadow ? 'translate-y-[12px] rounded-3xl overflow-hidden' : ''}`}
                     style={{
                         WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)',
                         maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)',
