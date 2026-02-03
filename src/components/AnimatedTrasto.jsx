@@ -10,7 +10,6 @@ export const AnimatedTrasto = ({ className = "" }) => {
             if (videoReverseRef.current) {
                 videoReverseRef.current.currentTime = 0
                 videoReverseRef.current.play().then(() => {
-                    // Wait 100ms to ensure the video has started rendering properly
                     setTimeout(() => setShowReverse(true), 100)
                 }).catch(() => { })
             }
@@ -23,6 +22,13 @@ export const AnimatedTrasto = ({ className = "" }) => {
             }
         }
     }
+
+    // Auto-play on mount
+    useEffect(() => {
+        if (videoNormalRef.current) {
+            videoNormalRef.current.play().catch(() => { })
+        }
+    }, [])
 
     return (
         <div className={`relative select-none ${className}`} style={{ userSelect: 'none', WebkitUserSelect: 'none' }}>
