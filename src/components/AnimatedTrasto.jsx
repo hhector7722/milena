@@ -2,64 +2,75 @@ import React, { useState, useEffect, useRef } from 'react'
 
 export const AnimatedTrasto = ({ className = "" }) => {
     const [activeVideo, setActiveVideo] = useState('normal') // 'normal' or 'reverse'
-    const [isTransitioning, setIsTransitioning] = useState(false)
+    const [isSwapping, setIsSwapping] = useState(false)
     const videoNormalRef = useRef(null)
     const videoReverseRef = useRef(null)
     const requestRef = useRef()
 
-    const startNext = (mode) => {
-        if (isTransitioning) return
+    const performSwap = (mode) => {
+        if (isSwapping) return
 
         const next = mode === 'normal' ? videoReverseRef.current : videoNormalRef.current
         if (next) {
-            setIsTransitioning(true)
-            next.currentTime = 0.1 // Skip start-to-end gaps
+            setIsSwapping(true)
+            next.currentTime = 0.12 // Skip the very first frame to ensure buffer
             next.play().then(() => {
-                setActiveVideo(mode === 'normal' ? 'reverse' : 'normal')
-                // Keep the blur/transition state for the duration of the CSS transition
-                setTimeout(() => setIsTransitioning(false), 1000)
+                // Wait for the next video to actually have a frame (0.2s of play)
+                const checkPlaying = () => {
+                    if (next.currentTime > 0.25) {
+                        setActiveVideo(mode === 'normal' ? 'reverse' : 'normal')
+                        // Hold the "isSwapping" blur state for a brief moment
+                        setTimeout(() => setIsSwapping(false), 400)
+                    } else {
+                        requestAnimationFrame(checkPlaying)
+                    }
+                }
+                checkPlaying()
             }).catch(() => {
-                setIsTransitioning(false)
+                setIsSwapping(false)
             })
         }
     }
 
-    const checkTime = () => {
+    const monitorPlayback = () => {
         const current = activeVideo === 'normal' ? videoNormalRef.current : videoReverseRef.current
-        if (current && current.duration && !isTransitioning) {
+        if (current && current.duration && !isSwapping) {
             const timeLeft = current.duration - current.currentTime
-            // Trigger 1s before to allow for a smooth 1s cross-fade
-            if (timeLeft < 1.0) {
-                startNext(activeVideo)
+            // Start the next video 0.8s before the current one ends
+            if (timeLeft < 0.8) {
+                performSwap(activeVideo)
             }
         }
-        requestRef.current = requestAnimationFrame(checkTime)
+        requestRef.current = requestAnimationFrame(monitorPlayback)
     }
 
     useEffect(() => {
-        requestRef.current = requestAnimationFrame(checkTime)
+        requestRef.current = requestAnimationFrame(monitorPlayback)
         if (videoNormalRef.current) videoNormalRef.current.play().catch(() => { })
         return () => cancelAnimationFrame(requestRef.current)
-    }, [activeVideo, isTransitioning])
+    }, [activeVideo, isSwapping])
 
     return (
-        <div className={`relative select-none transition-all duration-1000 ${className} ${isTransitioning ? 'blur-[3px] scale-[1.02]' : 'blur-0 scale-100'}`}
+        <div className={`relative select-none transition-all duration-500 ease-in-out ${className} ${isSwapping ? 'blur-[4px] scale-[1.03]' : 'blur-0 scale-100'}`}
             style={{ userSelect: 'none', WebkitUserSelect: 'none' }}>
             <div
-                className="absolute inset-0 z-20"
+                className="absolute inset-0"
                 style={{
                     WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)',
                     maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)',
                     filter: 'drop-shadow(0 15px 25px rgba(0,0,0,0.4))'
                 }}
             >
+                {/* Always behind safety frame */}
+                <img src="/trasto.png" className="absolute inset-0 w-full h-full object-contain opacity-20" alt="" />
+
                 <video
                     ref={videoNormalRef}
                     src="/trasto-video.mp4"
                     muted
                     playsInline
                     preload="auto"
-                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-all duration-1000 ease-in-out ${activeVideo === 'normal' ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
+                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-opacity duration-300 ${activeVideo === 'normal' ? 'z-30 opacity-100' : 'z-10 opacity-0'}`}
                 />
                 <video
                     ref={videoReverseRef}
@@ -67,7 +78,7 @@ export const AnimatedTrasto = ({ className = "" }) => {
                     muted
                     playsInline
                     preload="auto"
-                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-all duration-1000 ease-in-out ${activeVideo === 'reverse' ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
+                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-opacity duration-300 ${activeVideo === 'reverse' ? 'z-30 opacity-100' : 'z-10 opacity-0'}`}
                 />
             </div>
         </div>
