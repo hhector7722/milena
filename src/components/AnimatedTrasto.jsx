@@ -5,21 +5,30 @@ export const AnimatedTrasto = ({ className = "" }) => {
     const videoNormalRef = useRef(null)
     const videoReverseRef = useRef(null)
 
-    const handleEnded = (toReverse) => {
+    const startTransition = (toReverse) => {
         if (toReverse) {
-            if (videoReverseRef.current) {
+            if (videoReverseRef.current && !showReverse) {
                 videoReverseRef.current.currentTime = 0
                 videoReverseRef.current.play().then(() => {
-                    setTimeout(() => setShowReverse(true), 100)
+                    setShowReverse(true)
                 }).catch(() => { })
             }
         } else {
-            if (videoNormalRef.current) {
+            if (videoNormalRef.current && showReverse) {
                 videoNormalRef.current.currentTime = 0
                 videoNormalRef.current.play().then(() => {
-                    setTimeout(() => setShowReverse(false), 100)
+                    setShowReverse(false)
                 }).catch(() => { })
             }
+        }
+    }
+
+    const handleTimeUpdate = (e) => {
+        const video = e.target
+        const timeLeft = video.duration - video.currentTime
+        // Switch when there's 0.4s left for a perfect cross-fade
+        if (timeLeft < 0.4) {
+            startTransition(!showReverse)
         }
     }
 
@@ -49,7 +58,7 @@ export const AnimatedTrasto = ({ className = "" }) => {
                     muted
                     playsInline
                     preload="auto"
-                    onEnded={() => handleEnded(true)}
+                    onTimeUpdate={!showReverse ? handleTimeUpdate : undefined}
                     className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-opacity duration-500 ease-in-out ${!showReverse ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
                 />
                 <video
@@ -58,7 +67,7 @@ export const AnimatedTrasto = ({ className = "" }) => {
                     muted
                     playsInline
                     preload="auto"
-                    onEnded={() => handleEnded(false)}
+                    onTimeUpdate={showReverse ? handleTimeUpdate : undefined}
                     className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-opacity duration-500 ease-in-out ${showReverse ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
                 />
             </div>
