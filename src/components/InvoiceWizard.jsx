@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { X, Check, FileText, Loader2, Save, Send, Download, Plus, Trash2, Calendar, User, MapPin, Hash, Scissors } from 'lucide-react'
 import { generateInvoicePDF } from '../utils/invoiceGenerator'
+import { AnimatedTrasto } from './AnimatedTrasto'
 
 export const InvoiceWizard = ({ isOpen, onClose, onComplete, client, onEmit }) => {
     const [step, setStep] = useState(1) // 1: Edit/Preview, 2: Success
@@ -8,20 +9,7 @@ export const InvoiceWizard = ({ isOpen, onClose, onComplete, client, onEmit }) =
     const [generatedBlob, setGeneratedBlob] = useState(null)
     const [blobUrl, setBlobUrl] = useState(null)
     const [mobileView, setMobileView] = useState('edit') // 'edit' or 'preview'
-    const [isReversed, setIsReversed] = useState(false)
-    const videoNormalRef = useRef(null)
-    const videoReverseRef = useRef(null)
 
-    // Handle initial video start when landing on success screen
-    useEffect(() => {
-        if (step === 2) {
-            setIsReversed(false)
-            if (videoNormalRef.current) {
-                videoNormalRef.current.currentTime = 0
-                videoNormalRef.current.play().catch(() => { })
-            }
-        }
-    }, [step])
 
     const [invoiceData, setInvoiceData] = useState({
         fecha: new Date().toISOString().split('T')[0],
@@ -373,44 +361,7 @@ export const InvoiceWizard = ({ isOpen, onClose, onComplete, client, onEmit }) =
                     <div className="h-full flex items-center justify-center p-8 overflow-hidden">
                         <div className="w-full max-w-2xl text-center animate-in zoom-in-95 duration-700">
                             <div className="w-48 h-48 mb-12 mx-auto relative group">
-                                {/* Enhanced Shadow base - Defines the "floor" */}
-                                <div className="absolute inset-0 rounded-3xl shadow-[0_48px_100px_-12px_rgba(0,0,0,0.8)] z-0" />
-
-                                {/* Double-buffered videos for flicker-free Boomerang loop */}
-                                <div className="absolute inset-x-0 bottom-0 h-48 z-10 flex justify-center animate-bounce-subtle">
-                                    <div className="w-48 h-48 relative translate-y-[12px] rounded-3xl overflow-hidden">
-                                        <video
-                                            ref={videoNormalRef}
-                                            src="/trasto-video.mp4"
-                                            muted
-                                            playsInline
-                                            preload="auto"
-                                            onEnded={() => {
-                                                setIsReversed(true)
-                                                if (videoReverseRef.current) {
-                                                    videoReverseRef.current.currentTime = 0
-                                                    videoReverseRef.current.play().catch(() => { })
-                                                }
-                                            }}
-                                            className={`absolute inset-0 w-full h-full object-contain mix-blend-screen ${!isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
-                                        />
-                                        <video
-                                            ref={videoReverseRef}
-                                            src="/trasto-video-reverse.mp4"
-                                            muted
-                                            playsInline
-                                            preload="auto"
-                                            onEnded={() => {
-                                                setIsReversed(false)
-                                                if (videoNormalRef.current) {
-                                                    videoNormalRef.current.currentTime = 0
-                                                    videoNormalRef.current.play().catch(() => { })
-                                                }
-                                            }}
-                                            className={`absolute inset-0 w-full h-full object-contain mix-blend-screen ${isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
-                                        />
-                                    </div>
-                                </div>
+                                <AnimatedTrasto className="w-48 h-48" />
                             </div>
 
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-16">
