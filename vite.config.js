@@ -11,9 +11,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['logo-circulo-perro-chica.png', 'avatars/*.png'],
       manifest: {
-        name: 'Gestión Canina',
-        short_name: 'G. Canina',
-        description: 'Gestión de adiestramiento canino y facturación',
+        name: 'Milena González',
+        short_name: 'Milena',
+        description: 'Gestió d\'adiestrament caní i facturació',
         theme_color: '#ffffff',
         background_color: '#ffffff',
         display: 'standalone',
