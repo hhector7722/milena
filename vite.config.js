@@ -11,22 +11,20 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['logo-circulo-perro-chica.png', 'avatars/*.png'],
       manifest: {
-        name: 'Milena González',
-        short_name: 'Milena',
-        description: 'Especialista en comportament caní',
+        name: 'Gestión Canina',
+        short_name: 'G. Canina',
+        description: 'Gestión de adiestramiento canino y facturación',
         theme_color: '#ffffff',
         background_color: '#ffffff',
         display: 'standalone',
-        orientation: 'portrait',
-        start_url: '/',
         icons: [
           {
-            src: 'icon.png',
+            src: 'logo-circulo-perro-chica.png',
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: 'icon.png',
+            src: 'logo-circulo-perro-chica.png',
             sizes: '512x512',
             type: 'image/png'
           }
