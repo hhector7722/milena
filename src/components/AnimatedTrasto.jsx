@@ -10,15 +10,15 @@ export const AnimatedTrasto = ({ className = "" }) => {
             if (videoReverseRef.current) {
                 videoReverseRef.current.currentTime = 0
                 videoReverseRef.current.play().then(() => {
-                    // Small delay to ensure the first frame is rendered before showing
-                    setTimeout(() => setShowReverse(true), 50)
+                    // Wait 100ms to ensure the video has started rendering properly
+                    setTimeout(() => setShowReverse(true), 100)
                 }).catch(() => { })
             }
         } else {
             if (videoNormalRef.current) {
                 videoNormalRef.current.currentTime = 0
                 videoNormalRef.current.play().then(() => {
-                    setTimeout(() => setShowReverse(false), 50)
+                    setTimeout(() => setShowReverse(false), 100)
                 }).catch(() => { })
             }
         }
@@ -44,7 +44,7 @@ export const AnimatedTrasto = ({ className = "" }) => {
                     playsInline
                     preload="auto"
                     onEnded={() => handleEnded(true)}
-                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-opacity duration-200 ${!showReverse ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
+                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-opacity duration-500 ease-in-out ${!showReverse ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
                 />
                 <video
                     ref={videoReverseRef}
@@ -53,7 +53,7 @@ export const AnimatedTrasto = ({ className = "" }) => {
                     playsInline
                     preload="auto"
                     onEnded={() => handleEnded(false)}
-                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-opacity duration-200 ${showReverse ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
+                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-opacity duration-500 ease-in-out ${showReverse ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
                 />
             </div>
         </div>
