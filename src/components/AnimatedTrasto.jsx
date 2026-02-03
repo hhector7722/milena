@@ -1,54 +1,46 @@
 import React, { useState, useEffect, useRef } from 'react'
 
 export const AnimatedTrasto = ({ className = "" }) => {
-    const [showReverse, setShowReverse] = useState(false)
+    const [activeVideo, setActiveVideo] = useState('normal') // 'normal' or 'reverse'
     const videoNormalRef = useRef(null)
     const videoReverseRef = useRef(null)
+    const requestRef = useRef()
 
-    const startTransition = (toReverse) => {
-        if (toReverse) {
-            if (videoReverseRef.current && !showReverse) {
-                videoReverseRef.current.currentTime = 0
-                videoReverseRef.current.play().then(() => {
-                    setShowReverse(true)
-                }).catch(() => { })
-            }
-        } else {
-            if (videoNormalRef.current && showReverse) {
-                videoNormalRef.current.currentTime = 0
-                videoNormalRef.current.play().then(() => {
-                    setShowReverse(false)
-                }).catch(() => { })
-            }
+    const startNext = (mode) => {
+        const next = mode === 'normal' ? videoReverseRef.current : videoNormalRef.current
+        if (next) {
+            next.currentTime = 0.05 // Skip potential black frame at start
+            next.play().then(() => {
+                setActiveVideo(mode === 'normal' ? 'reverse' : 'normal')
+            }).catch(() => { })
         }
     }
 
-    const handleTimeUpdate = (e) => {
-        const video = e.target
-        const timeLeft = video.duration - video.currentTime
-        // Switch when there's 0.4s left for a perfect cross-fade
-        if (timeLeft < 0.4) {
-            startTransition(!showReverse)
+    const checkTime = () => {
+        const current = activeVideo === 'normal' ? videoNormalRef.current : videoReverseRef.current
+        if (current && current.duration) {
+            const timeLeft = current.duration - current.currentTime
+            // Trigger 0.6s before end to match the 600ms transition
+            if (timeLeft < 0.6) {
+                startNext(activeVideo)
+            }
         }
+        requestRef.current = requestAnimationFrame(checkTime)
     }
 
-    // Auto-play on mount
     useEffect(() => {
-        if (videoNormalRef.current) {
-            videoNormalRef.current.play().catch(() => { })
-        }
-    }, [])
+        requestRef.current = requestAnimationFrame(checkTime)
+        if (videoNormalRef.current) videoNormalRef.current.play().catch(() => { })
+        return () => cancelAnimationFrame(requestRef.current)
+    }, [activeVideo])
 
     return (
         <div className={`relative select-none ${className}`} style={{ userSelect: 'none', WebkitUserSelect: 'none' }}>
-            {/* Trasto - Foreground Level with horizontal blending only */}
             <div
                 className="absolute inset-0 z-20"
                 style={{
                     WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)',
-                    WebkitMaskComposite: 'source-in',
                     maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)',
-                    maskComposite: 'intersect',
                     filter: 'drop-shadow(0 15px 25px rgba(0,0,0,0.4))'
                 }}
             >
@@ -58,8 +50,7 @@ export const AnimatedTrasto = ({ className = "" }) => {
                     muted
                     playsInline
                     preload="auto"
-                    onTimeUpdate={!showReverse ? handleTimeUpdate : undefined}
-                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-opacity duration-500 ease-in-out ${!showReverse ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
+                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-opacity duration-[600ms] ease-in-out ${activeVideo === 'normal' ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
                 />
                 <video
                     ref={videoReverseRef}
@@ -67,8 +58,7 @@ export const AnimatedTrasto = ({ className = "" }) => {
                     muted
                     playsInline
                     preload="auto"
-                    onTimeUpdate={showReverse ? handleTimeUpdate : undefined}
-                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-opacity duration-500 ease-in-out ${showReverse ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
+                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-opacity duration-[600ms] ease-in-out ${activeVideo === 'reverse' ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
                 />
             </div>
         </div>
