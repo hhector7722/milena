@@ -28,10 +28,10 @@ export const AnimatedTrasto = ({ className = "", showShadow = true }) => {
                     style={{
                         WebkitMaskImage: showShadow
                             ? 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)'
-                            : 'radial-gradient(circle at center, black 30%, transparent 85%)', // Soft fade for header mode
+                            : 'radial-gradient(circle at center, black 60%, transparent 95%)', // Expanded sharp area for ears
                         maskImage: showShadow
                             ? 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)'
-                            : 'radial-gradient(circle at center, black 30%, transparent 85%)',
+                            : 'radial-gradient(circle at center, black 60%, transparent 95%)',
                     }}
                 >
                     {/* Double-buffered videos for flicker-free Boomerang loop */}
