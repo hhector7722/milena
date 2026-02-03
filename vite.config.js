@@ -21,12 +21,12 @@ export default defineConfig({
         start_url: '/',
         icons: [
           {
-            src: 'logo-circulo-perro-chica.png',
+            src: 'wat.png',
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: 'logo-circulo-perro-chica.png',
+            src: 'wat.png',
             sizes: '512x512',
             type: 'image/png'
           }

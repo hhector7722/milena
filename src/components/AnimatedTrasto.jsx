@@ -1,24 +1,28 @@
 import React, { useState, useEffect, useRef } from 'react'
 
 export const AnimatedTrasto = ({ className = "" }) => {
-    const [isReversed, setIsReversed] = useState(false)
+    const [showReverse, setShowReverse] = useState(false)
     const videoNormalRef = useRef(null)
     const videoReverseRef = useRef(null)
 
-    // Handle seamless video switching
-    useEffect(() => {
-        if (isReversed) {
+    const handleEnded = (toReverse) => {
+        if (toReverse) {
             if (videoReverseRef.current) {
                 videoReverseRef.current.currentTime = 0
-                videoReverseRef.current.play().catch(() => { })
+                videoReverseRef.current.play().then(() => {
+                    // Small delay to ensure the first frame is rendered before showing
+                    setTimeout(() => setShowReverse(true), 50)
+                }).catch(() => { })
             }
         } else {
             if (videoNormalRef.current) {
                 videoNormalRef.current.currentTime = 0
-                videoNormalRef.current.play().catch(() => { })
+                videoNormalRef.current.play().then(() => {
+                    setTimeout(() => setShowReverse(false), 50)
+                }).catch(() => { })
             }
         }
-    }, [isReversed])
+    }
 
     return (
         <div className={`relative select-none ${className}`} style={{ userSelect: 'none', WebkitUserSelect: 'none' }}>
@@ -39,8 +43,8 @@ export const AnimatedTrasto = ({ className = "" }) => {
                     muted
                     playsInline
                     preload="auto"
-                    onEnded={() => setIsReversed(true)}
-                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-opacity duration-300 ${!isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
+                    onEnded={() => handleEnded(true)}
+                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-opacity duration-200 ${!showReverse ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
                 />
                 <video
                     ref={videoReverseRef}
@@ -48,8 +52,8 @@ export const AnimatedTrasto = ({ className = "" }) => {
                     muted
                     playsInline
                     preload="auto"
-                    onEnded={() => setIsReversed(false)}
-                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-opacity duration-300 ${isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
+                    onEnded={() => handleEnded(false)}
+                    className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-opacity duration-200 ${showReverse ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
                 />
             </div>
         </div>
