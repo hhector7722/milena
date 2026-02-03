@@ -24,10 +24,14 @@ export const AnimatedTrasto = ({ className = "", showShadow = true }) => {
             {/* Animation Wrapper */}
             <div className="absolute inset-0 z-20 animate-bounce-subtle">
                 <div
-                    className={`absolute inset-0 ${showShadow ? 'translate-y-[12px] rounded-3xl overflow-hidden' : 'translate-y-[45px] sm:translate-y-[55px]'}`}
+                    className={`absolute inset-0 ${showShadow ? 'translate-y-[12px] rounded-3xl overflow-hidden' : 'translate-y-[15px] sm:translate-y-[20px]'}`}
                     style={{
-                        WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)',
-                        maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)',
+                        WebkitMaskImage: showShadow
+                            ? 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)'
+                            : 'linear-gradient(to bottom, transparent, black 15%, black 85%, black)', // Keep bottom sharp
+                        maskImage: showShadow
+                            ? 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)'
+                            : 'linear-gradient(to bottom, transparent, black 15%, black 85%, black)',
                     }}
                 >
                     {/* Double-buffered videos for flicker-free Boomerang loop */}
@@ -44,7 +48,7 @@ export const AnimatedTrasto = ({ className = "", showShadow = true }) => {
                                 videoReverseRef.current.play().catch(() => { })
                             }
                         }}
-                        className={`absolute inset-0 w-full h-full object-contain mix-blend-screen brightness-[0.85] contrast-[1.25] ${!isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
+                        className={`absolute inset-0 w-full h-full object-contain mix-blend-screen scale-110 brightness-[0.9] contrast-[1.2] ${!isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
                     />
                     <video
                         ref={videoReverseRef}
@@ -59,7 +63,7 @@ export const AnimatedTrasto = ({ className = "", showShadow = true }) => {
                                 videoNormalRef.current.play().catch(() => { })
                             }
                         }}
-                        className={`absolute inset-0 w-full h-full object-contain mix-blend-screen brightness-[0.85] contrast-[1.25] ${isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
+                        className={`absolute inset-0 w-full h-full object-contain mix-blend-screen scale-110 brightness-[0.9] contrast-[1.2] ${isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
                     />
                 </div>
             </div>
