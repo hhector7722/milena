@@ -12,7 +12,7 @@ export const AnimatedTrasto = ({ className = "" }) => {
                     filter: 'drop-shadow(0 15px 25px rgba(0,0,0,0.4))'
                 }}
             >
-                {/* Single native looping video */}
+                {/* Single native looping video for maximum stability */}
                 <video
                     src="/trasto-video.mp4"
                     muted
