@@ -48,7 +48,7 @@ export const AnimatedTrasto = ({ className = "", showShadow = true }) => {
                                 videoReverseRef.current.play().catch(() => { })
                             }
                         }}
-                        className={`absolute inset-0 w-full h-h-full object-cover mix-blend-screen scale-[1.01] ${!isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
+                        className={`absolute inset-0 w-full h-full object-cover mix-blend-screen ${!isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
                     />
                     <video
                         ref={videoReverseRef}
@@ -63,7 +63,7 @@ export const AnimatedTrasto = ({ className = "", showShadow = true }) => {
                                 videoNormalRef.current.play().catch(() => { })
                             }
                         }}
-                        className={`absolute inset-0 w-full h-full object-cover mix-blend-screen scale-[1.01] ${isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
+                        className={`absolute inset-0 w-full h-full object-cover mix-blend-screen ${isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
                     />
                 </div>
             </div>
