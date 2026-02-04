@@ -22,16 +22,16 @@ export const AnimatedTrasto = ({ className = "", showShadow = true }) => {
             )}
 
             {/* Animation Wrapper */}
-            <div className={`absolute inset-0 z-20 ${showShadow ? 'animate-bounce-subtle' : 'animate-bounce-subtle'}`}>
+            <div className="absolute inset-0 z-20 animate-bounce-subtle">
                 <div
-                    className={`absolute inset-0 ${showShadow ? 'translate-y-[12px] rounded-3xl overflow-hidden' : 'translate-y-[15px] sm:translate-y-[20px]'}`}
+                    className="absolute inset-0 overflow-hidden"
                     style={{
                         WebkitMaskImage: showShadow
                             ? 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)'
-                            : 'radial-gradient(circle at center, black 60%, transparent 95%)', // Expanded sharp area for ears
+                            : 'radial-gradient(circle at center, black 65%, transparent 95%)',
                         maskImage: showShadow
                             ? 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)'
-                            : 'radial-gradient(circle at center, black 60%, transparent 95%)',
+                            : 'radial-gradient(circle at center, black 65%, transparent 95%)',
                     }}
                 >
                     {/* Double-buffered videos for flicker-free Boomerang loop */}
@@ -48,7 +48,7 @@ export const AnimatedTrasto = ({ className = "", showShadow = true }) => {
                                 videoReverseRef.current.play().catch(() => { })
                             }
                         }}
-                        className={`absolute inset-0 w-full h-full object-cover mix-blend-screen ${!isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
+                        className={`absolute inset-0 w-full h-full object-cover mix-blend-screen transition-opacity duration-75 ${!isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
                     />
                     <video
                         ref={videoReverseRef}
@@ -63,7 +63,7 @@ export const AnimatedTrasto = ({ className = "", showShadow = true }) => {
                                 videoNormalRef.current.play().catch(() => { })
                             }
                         }}
-                        className={`absolute inset-0 w-full h-full object-cover mix-blend-screen ${isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
+                        className={`absolute inset-0 w-full h-full object-cover mix-blend-screen transition-opacity duration-75 ${isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
                     />
                 </div>
             </div>
