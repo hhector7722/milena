@@ -351,7 +351,7 @@ export const ClientModal = ({ isOpen, onClose, client, onSave, onEmitInvoice, on
                     </div>
 
                     {/* Compact Footer */}
-                    <div className="px-6 py-2 sm:px-10 sm:py-3 border-t border-white/10 bg-[#295773] flex flex-wrap sm:flex-nowrap gap-2 sm:gap-3 shrink-0">
+                    <div className="px-6 py-4 pb-8 sm:px-10 sm:py-3 border-t border-white/10 bg-[#295773] flex flex-wrap sm:flex-nowrap gap-2 sm:gap-3 shrink-0">
                         {!showHistory && (
                             <>
                                 <button type="button" onClick={onClose} className="flex-1 bg-white/5 border border-white/10 text-white/40 rounded-xl py-2.5 font-black hover:text-white transition-all text-[10px] tracking-widest uppercase">Tancar</button>
@@ -392,7 +392,7 @@ export const ClientModal = ({ isOpen, onClose, client, onSave, onEmitInvoice, on
 
                     {/* Delete Option for Existing Clients - Dark/White Theme */}
                     {client?.id && !showHistory && (
-                        <div className="px-10 py-3 sm:py-5 bg-[#1a3a4e] flex items-center justify-center border-t border-white/10">
+                        <div className="px-10 py-6 pb-12 sm:py-5 bg-[#1a3a4e] flex items-center justify-center border-t border-white/10">
                             {showDeleteConfirm ? (
                                 <div className="flex items-center gap-6 animate-in fade-in slide-in-from-bottom-2">
                                     <p className="text-[11px] font-black text-white uppercase tracking-widest">Vols eliminar la fitxa?</p>
