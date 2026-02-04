@@ -167,12 +167,12 @@ export const ClientModal = ({ isOpen, onClose, client, onSave, onEmitInvoice, on
                 <div className="relative w-full max-w-6xl bg-[#295773] sm:rounded-[48px] shadow-[0_32px_80px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col h-full sm:h-auto sm:max-h-[95vh] animate-in fade-in slide-in-from-bottom-12 zoom-in-95 duration-700">
 
                     {/* Header Compact & Seamless - NO BORDER - RELATIVE FOR CENTERING */}
-                    <div className="relative flex items-center justify-between px-6 py-2 sm:px-10 sm:py-3 bg-[#295773] shrink-0 z-10">
+                    <div className="relative flex items-center justify-between px-4 py-1.5 sm:px-10 sm:py-3 bg-[#295773] shrink-0 z-10">
                         {/* LEFT: Avatar + Edit Button */}
                         <div className="flex items-center gap-3 sm:gap-4 z-20">
                             <div
                                 onClick={() => !showHistory && setIsAvatarModalOpen(true)}
-                                className={`w-10 h-10 sm:w-16 sm:h-16 ${!showHistory ? 'cursor-pointer hover:scale-105 active:scale-95' : ''} transition-all group shrink-0 relative`}
+                                className={`w-8 h-8 sm:w-16 sm:h-16 ${!showHistory ? 'cursor-pointer hover:scale-105 active:scale-95' : ''} transition-all group shrink-0 relative`}
                             >
                                 {client?.id ? (
                                     <div className="w-full h-full p-0.5">
@@ -186,8 +186,8 @@ export const ClientModal = ({ isOpen, onClose, client, onSave, onEmitInvoice, on
                                         />
                                     </div>
                                 ) : (
-                                    <div className="w-10 h-10 sm:w-12 sm:h-12 border-2 border-dashed border-white/30 rounded-full flex items-center justify-center">
-                                        <User className="w-6 h-6 sm:w-7 sm:h-7 text-white/50" />
+                                    <div className="w-8 h-8 sm:w-12 sm:h-12 border-2 border-dashed border-white/30 rounded-full flex items-center justify-center">
+                                        <User className="w-5 h-5 sm:w-7 sm:h-7 text-white/50" />
                                     </div>
                                 )}
                             </div>
@@ -230,7 +230,7 @@ export const ClientModal = ({ isOpen, onClose, client, onSave, onEmitInvoice, on
                         </div>
                     </div>
 
-                    <div className="flex-1 overflow-hidden px-4 pt-8 pb-4 sm:px-8 sm:pt-12 sm:pb-6 flex flex-col gap-3">
+                    <div className="flex-1 overflow-hidden px-4 pt-4 pb-2 sm:px-8 sm:pt-12 sm:pb-6 flex flex-col gap-2 sm:gap-3">
                         {showHistory ? (
                             <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar space-y-2 animate-in fade-in slide-in-from-right-10 duration-500">
                                 {invoices.length === 0 ? (
@@ -278,46 +278,46 @@ export const ClientModal = ({ isOpen, onClose, client, onSave, onEmitInvoice, on
                         ) : (
                             <>
                                 <div className="flex-1 overflow-hidden space-y-3">
-                                    <form onSubmit={handleSubmit} className="h-full space-y-3">
-                                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                                    <form onSubmit={handleSubmit} className="h-full space-y-2">
+                                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-3">
                                             {/* Combined Card 1 & 2 */}
-                                            <div className="bg-white/5 border border-white/10 rounded-[24px] p-4 shadow-xl space-y-3">
-                                                <h4 className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] border-b border-white/5 pb-2">Identitat i Contacte</h4>
-                                                <div className="grid grid-cols-2 gap-3">
+                                            <div className="bg-white/5 border border-white/10 rounded-[20px] sm:rounded-[24px] p-3 sm:p-4 shadow-xl space-y-2">
+                                                <h4 className="text-[8px] sm:text-[10px] font-black text-white/40 uppercase tracking-[0.2em] border-b border-white/5 pb-1.5 sm:pb-2">Identitat i Contacte</h4>
+                                                <div className="grid grid-cols-2 gap-2 sm:gap-3">
                                                     <div className="space-y-1 col-span-2">
-                                                        <label className="text-[9px] font-black text-white uppercase tracking-widest ml-1">Propietari</label>
-                                                        <input name="nombre_propietario" value={formData.nombre_propietario} onChange={handleChange} placeholder="Laura Font" className="w-full bg-white border-2 border-[#295773] rounded-xl py-2 px-4 focus:ring-4 focus:ring-white/5 transition-all outline-none text-gray-900 font-black text-xs shadow-sm" />
+                                                        <label className="text-[8px] sm:text-[9px] font-black text-white uppercase tracking-widest ml-1">Propietari</label>
+                                                        <input name="nombre_propietario" value={formData.nombre_propietario} onChange={handleChange} placeholder="Laura Font" className="w-full bg-white border-2 border-[#295773] rounded-xl py-1.5 sm:py-2 px-4 focus:ring-4 focus:ring-white/5 transition-all outline-none text-gray-900 font-black text-xs shadow-sm" />
                                                     </div>
                                                     <div className="space-y-1 col-span-2">
-                                                        <label className="text-[9px] font-black text-white uppercase tracking-widest ml-1">Gos / Gossos</label>
-                                                        <input name="nombre_perros" value={formData.nombre_perros} onChange={handleChange} placeholder="Toby i Luna" className="w-full bg-white border-2 border-[#295773] rounded-xl py-2 px-4 focus:ring-4 focus:ring-white/5 transition-all outline-none text-gray-900 font-black text-xs shadow-sm" />
+                                                        <label className="text-[8px] sm:text-[9px] font-black text-white uppercase tracking-widest ml-1">Gos / Gossos</label>
+                                                        <input name="nombre_perros" value={formData.nombre_perros} onChange={handleChange} placeholder="Toby i Luna" className="w-full bg-white border-2 border-[#295773] rounded-xl py-1.5 sm:py-2 px-4 focus:ring-4 focus:ring-white/5 transition-all outline-none text-gray-900 font-black text-xs shadow-sm" />
                                                     </div>
                                                     <div className="space-y-1">
-                                                        <label className="text-[9px] font-black text-white uppercase tracking-widest ml-1">Telèfon</label>
-                                                        <input name="telefono" value={formData.telefono} onChange={handleChange} placeholder="600 000 000" className="w-full bg-white border-2 border-[#295773] rounded-xl py-2 px-4 focus:ring-4 focus:ring-white/5 transition-all outline-none text-gray-900 font-black text-xs shadow-sm" />
+                                                        <label className="text-[8px] sm:text-[9px] font-black text-white uppercase tracking-widest ml-1">Telèfon</label>
+                                                        <input name="telefono" value={formData.telefono} onChange={handleChange} placeholder="600 000 000" className="w-full bg-white border-2 border-[#295773] rounded-xl py-1.5 sm:py-2 px-4 focus:ring-4 focus:ring-white/5 transition-all outline-none text-gray-900 font-black text-xs shadow-sm" />
                                                     </div>
                                                     <div className="space-y-1">
-                                                        <label className="text-[9px] font-black text-white uppercase tracking-widest ml-1">DNI / NIF</label>
-                                                        <input name="dni_nif" value={formData.dni_nif} onChange={handleChange} placeholder="12345678X" className="w-full bg-white border-2 border-[#295773] rounded-xl py-2 px-4 focus:ring-4 focus:ring-white/5 transition-all outline-none text-gray-900 font-black text-xs shadow-sm" />
+                                                        <label className="text-[8px] sm:text-[9px] font-black text-white uppercase tracking-widest ml-1">DNI / NIF</label>
+                                                        <input name="dni_nif" value={formData.dni_nif} onChange={handleChange} placeholder="12345678X" className="w-full bg-white border-2 border-[#295773] rounded-xl py-1.5 sm:py-2 px-4 focus:ring-4 focus:ring-white/5 transition-all outline-none text-gray-900 font-black text-xs shadow-sm" />
                                                     </div>
                                                 </div>
                                             </div>
 
                                             {/* Card 2: Ubicació i Facturació */}
-                                            <div className="bg-white/5 border border-white/10 rounded-[24px] p-4 shadow-xl space-y-3">
-                                                <h4 className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] border-b border-white/5 pb-2">Ubicació i Facturació</h4>
-                                                <div className="grid grid-cols-1 gap-3">
+                                            <div className="bg-white/5 border border-white/10 rounded-[20px] sm:rounded-[24px] p-3 sm:p-4 shadow-xl space-y-2">
+                                                <h4 className="text-[8px] sm:text-[10px] font-black text-white/40 uppercase tracking-[0.2em] border-b border-white/5 pb-1.5 sm:pb-2">Ubicació i Facturació</h4>
+                                                <div className="grid grid-cols-1 gap-2 sm:gap-3">
                                                     <div className="space-y-1">
-                                                        <label className="text-[9px] font-black text-white uppercase tracking-widest ml-1">Raó Social</label>
-                                                        <input name="raon_social" value={formData.raon_social} onChange={handleChange} placeholder="Nom fiscal" className="w-full bg-white border-2 border-[#295773] rounded-xl py-2 px-4 focus:ring-4 focus:ring-white/5 transition-all outline-none text-gray-900 font-black text-xs shadow-sm" />
+                                                        <label className="text-[8px] sm:text-[9px] font-black text-white uppercase tracking-widest ml-1">Raó Social</label>
+                                                        <input name="raon_social" value={formData.raon_social} onChange={handleChange} placeholder="Nom fiscal" className="w-full bg-white border-2 border-[#295773] rounded-xl py-1.5 sm:py-2 px-4 focus:ring-4 focus:ring-white/5 transition-all outline-none text-gray-900 font-black text-xs shadow-sm" />
                                                     </div>
                                                     <div className="space-y-1">
-                                                        <label className="text-[9px] font-black text-white uppercase tracking-widest ml-1">Adreça</label>
-                                                        <input name="direccion" value={formData.direccion} onChange={handleChange} placeholder="Carrer, 123" className="w-full bg-white border-2 border-[#295773] rounded-xl py-2 px-4 focus:ring-4 focus:ring-white/5 transition-all outline-none text-gray-900 font-black text-xs shadow-sm" />
+                                                        <label className="text-[8px] sm:text-[9px] font-black text-white uppercase tracking-widest ml-1">Adreça</label>
+                                                        <input name="direccion" value={formData.direccion} onChange={handleChange} placeholder="Carrer, 123" className="w-full bg-white border-2 border-[#295773] rounded-xl py-1.5 sm:py-2 px-4 focus:ring-4 focus:ring-white/5 transition-all outline-none text-gray-900 font-black text-xs shadow-sm" />
                                                     </div>
                                                     <div className="space-y-1">
-                                                        <label className="text-[9px] font-black text-white uppercase tracking-widest ml-1">Email</label>
-                                                        <input name="email" type="email" value={formData.email} onChange={handleChange} placeholder="email@client.com" className="w-full bg-white border-2 border-[#295773] rounded-xl py-2 px-4 focus:ring-4 focus:ring-white/5 transition-all outline-none text-gray-900 font-black text-xs shadow-sm" />
+                                                        <label className="text-[8px] sm:text-[9px] font-black text-white uppercase tracking-widest ml-1">Email</label>
+                                                        <input name="email" type="email" value={formData.email} onChange={handleChange} placeholder="email@client.com" className="w-full bg-white border-2 border-[#295773] rounded-xl py-1.5 sm:py-2 px-4 focus:ring-4 focus:ring-white/5 transition-all outline-none text-gray-900 font-black text-xs shadow-sm" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -351,7 +351,7 @@ export const ClientModal = ({ isOpen, onClose, client, onSave, onEmitInvoice, on
                     </div>
 
                     {/* Compact Footer */}
-                    <div className="px-6 py-2 sm:px-10 sm:py-3 border-t border-white/10 bg-[#295773] flex flex-wrap sm:flex-nowrap gap-3 shrink-0">
+                    <div className="px-6 py-2 sm:px-10 sm:py-3 border-t border-white/10 bg-[#295773] flex flex-wrap sm:flex-nowrap gap-2 sm:gap-3 shrink-0">
                         {!showHistory && (
                             <>
                                 <button type="button" onClick={onClose} className="flex-1 bg-white/5 border border-white/10 text-white/40 rounded-xl py-2.5 font-black hover:text-white transition-all text-[10px] tracking-widest uppercase">Tancar</button>
@@ -392,7 +392,7 @@ export const ClientModal = ({ isOpen, onClose, client, onSave, onEmitInvoice, on
 
                     {/* Delete Option for Existing Clients - Dark/White Theme */}
                     {client?.id && !showHistory && (
-                        <div className="px-10 py-5 bg-[#1a3a4e] flex items-center justify-center border-t border-white/10">
+                        <div className="px-10 py-3 sm:py-5 bg-[#1a3a4e] flex items-center justify-center border-t border-white/10">
                             {showDeleteConfirm ? (
                                 <div className="flex items-center gap-6 animate-in fade-in slide-in-from-bottom-2">
                                     <p className="text-[11px] font-black text-white uppercase tracking-widest">Vols eliminar la fitxa?</p>

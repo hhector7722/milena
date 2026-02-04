@@ -122,13 +122,13 @@ export const InvoiceWizard = ({ isOpen, onClose, onComplete, client, onEmit }) =
 
             {/* Header Area */}
             {step !== 2 && (
-                <div className="relative z-10 flex items-center justify-between p-4 lg:p-8 shrink-0 animate-in fade-in slide-in-from-top-4 duration-500">
+                <div className="relative z-10 flex items-center justify-between p-3 sm:p-4 lg:p-8 shrink-0 animate-in fade-in slide-in-from-top-4 duration-500">
                     <div className="flex items-center gap-4">
                         <button
                             onClick={onClose}
-                            className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-white hover:bg-white/20 transition-all border border-white/10 shadow-lg active:scale-95"
+                            className="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-white hover:bg-white/20 transition-all border border-white/10 shadow-lg active:scale-95"
                         >
-                            <X className="w-6 h-6" />
+                            <X className="w-5 h-5 sm:w-6 sm:h-6" />
                         </button>
                         <div className="hidden sm:block">
                             <h3 className="text-2xl font-black text-white leading-none">Nova Factura</h3>
@@ -141,9 +141,9 @@ export const InvoiceWizard = ({ isOpen, onClose, onComplete, client, onEmit }) =
                             <button
                                 onClick={handleSave}
                                 disabled={isGenerating}
-                                className="bg-white text-[#265471] px-8 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest shadow-[0_20px_40px_rgba(0,0,0,0.2)] flex items-center gap-3 hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
+                                className="bg-white text-[#265471] px-5 sm:px-8 py-2.5 sm:py-3.5 rounded-2xl font-black text-[10px] sm:text-xs uppercase tracking-widest shadow-[0_20px_40px_rgba(0,0,0,0.2)] flex items-center gap-2 sm:gap-3 hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
                             >
-                                {isGenerating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
+                                {isGenerating ? <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" /> : <Save className="w-4 h-4 sm:w-5 sm:h-5" />}
                                 <span className="hidden sm:inline">Desar Factura</span>
                                 <span className="sm:hidden">Desar</span>
                             </button>
@@ -174,65 +174,65 @@ export const InvoiceWizard = ({ isOpen, onClose, onComplete, client, onEmit }) =
                     <div className="h-full flex flex-col lg:flex-row p-4 lg:p-10 gap-8 justify-center overflow-hidden">
 
                         {/* 1. FLOATING EDITOR SECTIONS (Flattened) */}
-                        <div className={`w-full lg:w-[400px] flex-1 min-h-0 flex flex-col gap-6 overflow-y-auto custom-scrollbar shrink-0 transition-all duration-500
+                        <div className={`w-full lg:w-[400px] flex-1 min-h-0 flex flex-col gap-4 sm:gap-6 overflow-y-auto custom-scrollbar shrink-0 transition-all duration-500
                             ${mobileView === 'edit' ? 'flex animate-in slide-in-from-left-8' : 'hidden lg:flex'}`}>
 
-                            <section className="space-y-5 bg-[#265471] p-8 rounded-[32px] shadow-xl border border-white/10">
-                                <h4 className="text-[10px] font-black text-white uppercase tracking-[0.2em] border-b border-white/5 pb-4">Dades Generals</h4>
-                                <div className="grid grid-cols-1 gap-5">
-                                    <div className="space-y-2">
-                                        <label className="text-[9px] font-black text-white uppercase ml-1">Data</label>
+                            <section className="space-y-3 sm:space-y-5 bg-[#265471] p-6 sm:p-8 rounded-[28px] sm:rounded-[32px] shadow-xl border border-white/10">
+                                <h4 className="text-[9px] sm:text-[10px] font-black text-white uppercase tracking-[0.2em] border-b border-white/5 pb-3 sm:pb-4">Dades Generals</h4>
+                                <div className="grid grid-cols-2 lg:grid-cols-1 gap-4 sm:gap-5">
+                                    <div className="space-y-1 sm:space-y-2">
+                                        <label className="text-[8px] sm:text-[9px] font-black text-white uppercase ml-1">Data</label>
                                         <input
                                             type="date"
                                             value={invoiceData.fecha}
                                             onChange={(e) => setInvoiceData(prev => ({ ...prev, fecha: e.target.value }))}
-                                            className="w-full bg-white border-2 border-gray-100 rounded-2xl py-3.5 px-5 text-sm font-black text-gray-900 focus:border-[#265471] focus:ring-4 focus:ring-[#265471]/5 outline-none transition-all shadow-sm"
+                                            className="w-full bg-white border border-gray-100 rounded-xl sm:rounded-2xl py-2.5 sm:py-3.5 px-4 sm:px-5 text-xs sm:text-sm font-black text-gray-900 focus:border-[#265471] focus:ring-4 focus:ring-[#265471]/5 outline-none transition-all shadow-sm"
                                         />
                                     </div>
-                                    <div className="space-y-2">
-                                        <label className="text-[9px] font-black text-white uppercase ml-1">Num. Factura</label>
+                                    <div className="space-y-1 sm:space-y-2">
+                                        <label className="text-[8px] sm:text-[9px] font-black text-white uppercase ml-1">Factura</label>
                                         <input
                                             type="text"
                                             value={invoiceData.numFactura}
                                             onChange={(e) => setInvoiceData(prev => ({ ...prev, numFactura: e.target.value }))}
-                                            className="w-full bg-white border-2 border-gray-100 rounded-2xl py-3.5 px-5 text-sm font-black text-gray-900 focus:border-[#265471] focus:ring-4 focus:ring-[#265471]/5 outline-none transition-all shadow-sm"
+                                            className="w-full bg-white border border-gray-100 rounded-xl sm:rounded-2xl py-2.5 sm:py-3.5 px-4 sm:px-5 text-xs sm:text-sm font-black text-gray-900 focus:border-[#265471] focus:ring-4 focus:ring-[#265471]/5 outline-none transition-all shadow-sm"
                                         />
                                     </div>
                                 </div>
                             </section>
 
-                            <section className="space-y-6 bg-[#265471] p-8 rounded-[32px] shadow-xl border border-white/10">
-                                <div className="flex items-center justify-between border-b border-white/5 pb-4">
-                                    <h4 className="text-[10px] font-black text-white uppercase tracking-[0.2em]">Serveis</h4>
-                                    <button onClick={addItem} className="text-[9px] font-black text-white bg-[#265471] px-4 py-2 rounded-xl hover:opacity-80 transition-all active:scale-90 flex items-center gap-1">
-                                        <Plus className="w-3 h-3" /> AFEGIR
+                            <section className="space-y-4 sm:space-y-6 bg-[#265471] p-6 sm:p-8 rounded-[28px] sm:rounded-[32px] shadow-xl border border-white/10">
+                                <div className="flex items-center justify-between border-b border-white/5 pb-3 sm:pb-4">
+                                    <h4 className="text-[9px] sm:text-[10px] font-black text-white uppercase tracking-[0.2em]">Serveis</h4>
+                                    <button onClick={addItem} className="text-[8px] sm:text-[9px] font-black text-white bg-[#265471] px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl hover:opacity-80 transition-all active:scale-90 flex items-center gap-1">
+                                        <Plus className="w-2.5 h-2.5 sm:w-3 sm:h-3" /> AFEGIR
                                     </button>
                                 </div>
-                                <div className="space-y-5">
+                                <div className="space-y-3 sm:space-y-5">
                                     {invoiceData.items.map((item) => (
-                                        <div key={item.id} className="p-6 bg-white/5 rounded-[28px] border-2 border-white/10 space-y-4 relative group">
+                                        <div key={item.id} className="p-4 sm:p-6 bg-white/5 rounded-[24px] sm:rounded-[28px] border-2 border-white/10 space-y-3 sm:space-y-4 relative group">
                                             {invoiceData.items.length > 1 && (
                                                 <button
                                                     onClick={() => removeItem(item.id)}
-                                                    className="absolute -top-2 -right-2 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center shadow-xl active:scale-90 transition-all"
+                                                    className="absolute -top-1.5 -right-1.5 w-7 h-7 sm:w-8 sm:h-8 bg-red-500 text-white rounded-full flex items-center justify-center shadow-xl active:scale-90 transition-all z-10"
                                                 >
-                                                    <Trash2 className="w-4 h-4" />
+                                                    <Trash2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                                                 </button>
                                             )}
                                             <input
                                                 placeholder="Descripció del servei..."
                                                 value={item.concepto}
                                                 onChange={(e) => updateItem(item.id, 'concepto', e.target.value)}
-                                                className="w-full bg-white border-2 border-gray-100 rounded-2xl py-3.5 px-5 text-xs font-black text-gray-900 outline-none focus:border-[#265471] shadow-sm"
+                                                className="w-full bg-white border border-gray-100 rounded-xl sm:rounded-2xl py-2.5 sm:py-3.5 px-4 sm:px-5 text-[10px] sm:text-xs font-black text-gray-900 outline-none focus:border-[#265471] shadow-sm"
                                             />
-                                            <div className="flex gap-3">
+                                            <div className="flex gap-2 sm:gap-3">
                                                 <div className="flex-1">
                                                     <input
                                                         type="number"
                                                         value={item.cantidad}
                                                         onChange={(e) => updateItem(item.id, 'cantidad', e.target.value)}
-                                                        className="w-full bg-white border-2 border-gray-100 rounded-2xl py-3.5 px-2 text-xs font-black text-gray-900 outline-none text-center focus:border-[#265471] shadow-sm"
-                                                        placeholder="Cant."
+                                                        className="w-full bg-white border border-gray-100 rounded-xl sm:rounded-2xl py-2.5 sm:py-3.5 px-2 text-[10px] sm:text-xs font-black text-gray-900 outline-none text-center focus:border-[#265471] shadow-sm"
+                                                        placeholder="Ct."
                                                     />
                                                 </div>
                                                 <div className="flex-[2] relative">
@@ -240,10 +240,10 @@ export const InvoiceWizard = ({ isOpen, onClose, onComplete, client, onEmit }) =
                                                         type="text"
                                                         value={item.precio}
                                                         onChange={(e) => updateItem(item.id, 'precio', e.target.value)}
-                                                        className="w-full bg-white border-2 border-gray-100 rounded-2xl py-3.5 pl-5 pr-8 text-xs font-black text-gray-900 outline-none text-right focus:border-[#265471] shadow-sm"
+                                                        className="w-full bg-white border border-gray-100 rounded-xl sm:rounded-2xl py-2.5 sm:py-3.5 pl-4 sm:pl-5 pr-7 sm:pr-8 text-[10px] sm:text-xs font-black text-gray-900 outline-none text-right focus:border-[#265471] shadow-sm"
                                                         placeholder="Preu"
                                                     />
-                                                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-black text-white/40">€</span>
+                                                    <span className="absolute right-2.5 sm:right-3 top-1/2 -translate-y-1/2 text-[9px] sm:text-[10px] font-black text-white/40">€</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -253,11 +253,11 @@ export const InvoiceWizard = ({ isOpen, onClose, onComplete, client, onEmit }) =
                         </div>
 
                         {/* 2. SEAMLESS PREVIEW - POSITIONED TOP & OPTIMIZED SCALE */}
-                        <div className={`flex-1 h-full w-full flex items-start justify-center overflow-hidden py-2 lg:py-2
+                        <div className={`flex-1 h-full w-full flex items-start justify-center overflow-hidden py-1 sm:py-2 lg:py-2
                             ${mobileView === 'preview' ? 'flex animate-in slide-in-from-right-8' : 'hidden lg:flex'}`}>
 
-                            <div className="w-[750px] aspect-[21/29.7] shrink-0 transform origin-top scale-[0.46] sm:scale-[0.62] lg:scale-[0.62] transition-all duration-700">
-                                <div className="h-full w-full p-10 lg:p-14 flex flex-col bg-white shadow-2xl lg:shadow-none lg:rounded-none rounded-sm">
+                            <div className="w-[750px] aspect-[21/29.7] shrink-0 transform origin-top scale-[0.44] xs:scale-[0.48] sm:scale-[0.62] lg:scale-[0.62] transition-all duration-700">
+                                <div className="h-full w-full p-8 sm:p-14 flex flex-col bg-white shadow-2xl lg:shadow-none lg:rounded-none rounded-sm">
                                     {/* Virtual Invoice Header */}
                                     <div className="flex justify-between items-start">
                                         <div>
