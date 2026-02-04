@@ -230,7 +230,7 @@ export const ClientModal = ({ isOpen, onClose, client, onSave, onEmitInvoice, on
                         </div>
                     </div>
 
-                    <div className="flex-1 overflow-hidden px-4 pt-4 pb-2 sm:px-8 sm:pt-12 sm:pb-6 flex flex-col gap-2 sm:gap-3">
+                    <div className="flex-1 overflow-hidden px-4 pt-1 sm:px-8 sm:pt-12 sm:pb-6 flex flex-col gap-2 sm:gap-3">
                         {showHistory ? (
                             <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar space-y-2 animate-in fade-in slide-in-from-right-10 duration-500">
                                 {invoices.length === 0 ? (

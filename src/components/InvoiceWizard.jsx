@@ -186,7 +186,7 @@ export const InvoiceWizard = ({ isOpen, onClose, onComplete, client, onEmit }) =
                                             type="date"
                                             value={invoiceData.fecha}
                                             onChange={(e) => setInvoiceData(prev => ({ ...prev, fecha: e.target.value }))}
-                                            className="w-full bg-white border border-gray-100 rounded-xl sm:rounded-2xl py-2.5 sm:py-3.5 px-4 sm:px-5 text-xs sm:text-sm font-black text-gray-900 focus:border-[#265471] focus:ring-4 focus:ring-[#265471]/5 outline-none transition-all shadow-sm"
+                                            className="w-full bg-white border border-gray-100 rounded-xl sm:rounded-2xl h-[38px] sm:h-auto py-2.5 sm:py-3.5 px-4 sm:px-5 text-xs sm:text-sm font-black text-gray-900 focus:border-[#265471] outline-none transition-all shadow-sm"
                                         />
                                     </div>
                                     <div className="space-y-1 sm:space-y-2">
@@ -195,7 +195,7 @@ export const InvoiceWizard = ({ isOpen, onClose, onComplete, client, onEmit }) =
                                             type="text"
                                             value={invoiceData.numFactura}
                                             onChange={(e) => setInvoiceData(prev => ({ ...prev, numFactura: e.target.value }))}
-                                            className="w-full bg-white border border-gray-100 rounded-xl sm:rounded-2xl py-2.5 sm:py-3.5 px-4 sm:px-5 text-xs sm:text-sm font-black text-gray-900 focus:border-[#265471] focus:ring-4 focus:ring-[#265471]/5 outline-none transition-all shadow-sm"
+                                            className="w-full bg-white border border-gray-100 rounded-xl sm:rounded-2xl h-[38px] sm:h-auto py-2.5 sm:py-3.5 px-4 sm:px-5 text-xs sm:text-sm font-black text-gray-900 focus:border-[#265471] outline-none transition-all shadow-sm"
                                         />
                                     </div>
                                 </div>
