@@ -3,9 +3,9 @@
     "name": "Gestió Canina Milena",
     "icons": [
         {
-            "src": "/logo-circulo-perro-chica.png",
+            "src": "/icon.png",
             "type": "image/png",
-            "sizes": "1024x1024",
+            "sizes": "512x512",
             "purpose": "any maskable"
         }
     ],
