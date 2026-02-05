@@ -8,10 +8,10 @@ const Header = ({ searchTerm, setSearchTerm }) => (
     <header className="sticky top-0 z-50 bg-[#2F5468] px-6 py-0 flex items-start justify-between shadow-[0_15px_40px_rgba(0,0,0,0.6)] backdrop-blur-sm after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[1px] after:bg-white/20 after:z-30">
         <div className="flex items-start gap-6 sm:gap-10 h-32 sm:h-44">
             {/* LARGE ANIMATED LOGO - Resting on the border */}
-            <div className="relative group cursor-pointer overflow-visible shrink-0 h-full flex items-end">
+            <div className="relative group cursor-pointer overflow-hidden shrink-0 h-full flex items-end">
                 <AnimatedTrasto
                     showShadow={false}
-                    className="w-28 h-28 sm:w-36 sm:h-36 hover:scale-105 transition-transform duration-300 translate-y-[10px] sm:translate-y-[12px]"
+                    className="w-28 h-28 sm:w-36 sm:h-36 hover:scale-105 transition-transform duration-300 translate-y-[32px] sm:translate-y-[40px]"
                 />
             </div>
 
