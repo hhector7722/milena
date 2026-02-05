@@ -11,7 +11,7 @@ const Header = ({ searchTerm, setSearchTerm }) => (
             <div className="relative group cursor-pointer overflow-visible shrink-0 h-full flex items-end">
                 <AnimatedTrasto
                     showShadow={false}
-                    className="w-28 h-28 sm:w-36 sm:h-36 hover:scale-105 transition-transform duration-300 translate-y-[20px] sm:translate-y-[25px]"
+                    className="w-28 h-28 sm:w-36 sm:h-36 hover:scale-105 transition-transform duration-300 translate-y-[32px] sm:translate-y-[40px]"
                 />
             </div>
 

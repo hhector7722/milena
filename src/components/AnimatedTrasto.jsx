@@ -13,7 +13,7 @@ export const AnimatedTrasto = ({ className = "", showShadow = true }) => {
     }, [])
 
     return (
-        <div className={`relative select-none ${className} ${!showShadow ? 'overflow-hidden' : ''}`}
+        <div className={`relative select-none ${className}`}
             style={{ userSelect: 'none', WebkitUserSelect: 'none' }}>
 
             {/* Enhanced Shadow base - Defines the "floor" */}
