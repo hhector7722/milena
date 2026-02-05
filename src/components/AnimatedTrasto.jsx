@@ -1,23 +1,42 @@
 import React, { useState, useRef, useEffect } from 'react'
 
 export const AnimatedTrasto = ({ className = "", showShadow = true }) => {
-    const [currentSrc, setCurrentSrc] = useState('/trasto-video.mp4')
-    const videoRef = useRef(null)
+    const [isReversed, setIsReversed] = useState(false)
+    const videoNormalRef = useRef(null)
+    const videoReverseRef = useRef(null)
 
-    // Handle source swapping and playback
-    const handleEnded = () => {
-        const nextSrc = currentSrc === '/trasto-video.mp4'
-            ? '/trasto-video-reverse.mp4'
-            : '/trasto-video.mp4'
-        setCurrentSrc(nextSrc)
+    // Handle normal video ending -> switch to reverse
+    const handleNormalEnded = () => {
+        if (videoReverseRef.current) {
+            videoReverseRef.current.currentTime = 0
+            // Play first, then swap visibility to ensure no black frame
+            videoReverseRef.current.play().then(() => {
+                setIsReversed(true)
+            }).catch(() => {
+                // Fallback if autoplay is blocked
+                setIsReversed(true)
+            })
+        }
     }
 
-    // Effect to play video immediately when source changes
-    useEffect(() => {
-        if (videoRef.current) {
-            videoRef.current.play().catch(() => { })
+    // Handle reverse video ending -> switch to normal
+    const handleReverseEnded = () => {
+        if (videoNormalRef.current) {
+            videoNormalRef.current.currentTime = 0
+            videoNormalRef.current.play().then(() => {
+                setIsReversed(false)
+            }).catch(() => {
+                setIsReversed(false)
+            })
         }
-    }, [currentSrc])
+    }
+
+    // Initial play
+    useEffect(() => {
+        if (videoNormalRef.current) {
+            videoNormalRef.current.play().catch(() => { })
+        }
+    }, [])
 
     return (
         <div className={`relative select-none ${className}`}
@@ -41,14 +60,25 @@ export const AnimatedTrasto = ({ className = "", showShadow = true }) => {
                             : 'radial-gradient(circle at center, black 65%, transparent 95%)',
                     }}
                 >
+                    {/* Buffer Normal */}
                     <video
-                        ref={videoRef}
-                        src={currentSrc}
+                        ref={videoNormalRef}
+                        src="/trasto-video.mp4"
                         muted
                         playsInline
                         preload="auto"
-                        onEnded={handleEnded}
-                        className="absolute inset-0 w-full h-full object-cover mix-blend-screen"
+                        onEnded={handleNormalEnded}
+                        className={`absolute inset-0 w-full h-full object-cover mix-blend-screen transition-opacity duration-75 ${!isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
+                    />
+                    {/* Buffer Reverse */}
+                    <video
+                        ref={videoReverseRef}
+                        src="/trasto-video-reverse.mp4"
+                        muted
+                        playsInline
+                        preload="auto"
+                        onEnded={handleReverseEnded}
+                        className={`absolute inset-0 w-full h-full object-cover mix-blend-screen transition-opacity duration-75 ${isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
                     />
                 </div>
             </div>
