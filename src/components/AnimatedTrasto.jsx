@@ -1,19 +1,26 @@
 import React, { useState, useRef, useEffect } from 'react'
 
 export const AnimatedTrasto = ({ className = "", showShadow = true }) => {
-    const [isReversed, setIsReversed] = useState(false)
-    const videoNormalRef = useRef(null)
-    const videoReverseRef = useRef(null)
+    const [currentSrc, setCurrentSrc] = useState('/trasto-video.mp4')
+    const videoRef = useRef(null)
 
-    // Ensure video starts playing on mount
+    // Handle source swapping and playback
+    const handleEnded = () => {
+        const nextSrc = currentSrc === '/trasto-video.mp4'
+            ? '/trasto-video-reverse.mp4'
+            : '/trasto-video.mp4'
+        setCurrentSrc(nextSrc)
+    }
+
+    // Effect to play video immediately when source changes
     useEffect(() => {
-        if (videoNormalRef.current) {
-            videoNormalRef.current.play().catch(() => { })
+        if (videoRef.current) {
+            videoRef.current.play().catch(() => { })
         }
-    }, [])
+    }, [currentSrc])
 
     return (
-        <div className={`relative select-none ${className} ${!showShadow ? 'overflow-hidden' : ''}`}
+        <div className={`relative select-none ${className}`}
             style={{ userSelect: 'none', WebkitUserSelect: 'none' }}>
 
             {/* Enhanced Shadow base - Defines the "floor" */}
@@ -34,36 +41,14 @@ export const AnimatedTrasto = ({ className = "", showShadow = true }) => {
                             : 'radial-gradient(circle at center, black 65%, transparent 95%)',
                     }}
                 >
-                    {/* Double-buffered videos for flicker-free Boomerang loop */}
                     <video
-                        ref={videoNormalRef}
-                        src="/trasto-video.mp4"
+                        ref={videoRef}
+                        src={currentSrc}
                         muted
                         playsInline
                         preload="auto"
-                        onEnded={() => {
-                            setIsReversed(true)
-                            if (videoReverseRef.current) {
-                                videoReverseRef.current.currentTime = 0
-                                videoReverseRef.current.play().catch(() => { })
-                            }
-                        }}
-                        className={`absolute inset-0 w-full h-full object-cover mix-blend-screen transition-opacity duration-75 ${!isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
-                    />
-                    <video
-                        ref={videoReverseRef}
-                        src="/trasto-video-reverse.mp4"
-                        muted
-                        playsInline
-                        preload="auto"
-                        onEnded={() => {
-                            setIsReversed(false)
-                            if (videoNormalRef.current) {
-                                videoNormalRef.current.currentTime = 0
-                                videoNormalRef.current.play().catch(() => { })
-                            }
-                        }}
-                        className={`absolute inset-0 w-full h-full object-cover mix-blend-screen transition-opacity duration-75 ${isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
+                        onEnded={handleEnded}
+                        className="absolute inset-0 w-full h-full object-cover mix-blend-screen"
                     />
                 </div>
             </div>
