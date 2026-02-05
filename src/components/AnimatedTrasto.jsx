@@ -24,7 +24,7 @@ export const AnimatedTrasto = ({ className = "", showShadow = true }) => {
             {/* Animation Wrapper */}
             <div className="absolute inset-0 z-20 animate-bounce-subtle">
                 <div
-                    className="absolute inset-0 overflow-hidden"
+                    className="absolute inset-0"
                     style={{
                         WebkitMaskImage: showShadow
                             ? 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)'
@@ -48,7 +48,7 @@ export const AnimatedTrasto = ({ className = "", showShadow = true }) => {
                                 videoReverseRef.current.play().catch(() => { })
                             }
                         }}
-                        className={`absolute inset-0 w-full h-full object-cover mix-blend-screen transition-opacity duration-75 ${!isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
+                        className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-opacity duration-75 ${!isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
                     />
                     <video
                         ref={videoReverseRef}
@@ -63,7 +63,7 @@ export const AnimatedTrasto = ({ className = "", showShadow = true }) => {
                                 videoNormalRef.current.play().catch(() => { })
                             }
                         }}
-                        className={`absolute inset-0 w-full h-full object-cover mix-blend-screen transition-opacity duration-75 ${isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
+                        className={`absolute inset-0 w-full h-full object-contain mix-blend-screen transition-opacity duration-75 ${isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
                     />
                 </div>
             </div>
