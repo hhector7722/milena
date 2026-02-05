@@ -68,7 +68,7 @@ export const AnimatedTrasto = ({ className = "", showShadow = true }) => {
                         playsInline
                         preload="auto"
                         onEnded={handleNormalEnded}
-                        className={`absolute inset-0 w-full h-full object-cover mix-blend-screen transition-opacity duration-75 scale-[1.02] ${!isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
+                        className={`absolute inset-0 w-full h-full object-cover mix-blend-screen transition-opacity duration-300 scale-[1.02] ${!isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
                     />
                     {/* Buffer Reverse */}
                     <video
@@ -78,7 +78,7 @@ export const AnimatedTrasto = ({ className = "", showShadow = true }) => {
                         playsInline
                         preload="auto"
                         onEnded={handleReverseEnded}
-                        className={`absolute inset-0 w-full h-full object-cover mix-blend-screen transition-opacity duration-75 scale-[1.02] ${isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
+                        className={`absolute inset-0 w-full h-full object-cover mix-blend-screen transition-opacity duration-300 scale-[1.02] ${isReversed ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
                     />
                 </div>
             </div>
