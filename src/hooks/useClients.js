@@ -208,5 +208,40 @@ export const useClients = (searchTerm = '') => {
         }
     }
 
-    return { clients, loading, saveClient, saveInvoice, uploadClientFile, deleteClient, deleteInvoice, fetchInvoices, getLatestInvoiceNumber }
+    const fetchInvoicesWithClients = async () => {
+        try {
+            const { data, error } = await supabase
+                .from('facturas')
+                .select(`
+                    *,
+                    clientes (
+                        nombre_propietario,
+                        nombre_perros,
+                        raon_social,
+                        dni_nif,
+                        direccion
+                    )
+                `)
+                .order('fecha_emision', { ascending: false })
+
+            if (error) throw error
+            return data
+        } catch (error) {
+            console.error('Error fetching invoices with clients:', error.message)
+            return []
+        }
+    }
+
+    return {
+        clients,
+        loading,
+        saveClient,
+        saveInvoice,
+        uploadClientFile,
+        deleteClient,
+        deleteInvoice,
+        fetchInvoices,
+        fetchInvoicesWithClients,
+        getLatestInvoiceNumber
+    }
 }

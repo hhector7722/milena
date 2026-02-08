@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { Search, Plus, User, Loader2 } from 'lucide-react'
+import { Search, Plus, User, Loader2, FileText } from 'lucide-react'
 import { ClientModal } from './components/ClientModal'
+import { InvoicesView } from './components/InvoicesView'
 import { useClients } from './hooks/useClients'
 import { AnimatedTrasto } from './components/AnimatedTrasto'
 
-const Header = ({ searchTerm, setSearchTerm }) => (
+const Header = ({ searchTerm, setSearchTerm, onOpenInvoices }) => (
     <header className="sticky top-0 z-50 bg-[#2F5468] border-b border-white/20 px-6 pt-[env(safe-area-inset-top,16px)] pb-0 flex items-start justify-between shadow-[0_15px_40px_rgba(0,0,0,0.6)] backdrop-blur-sm">
-        <div className="flex items-start gap-6 sm:gap-10 h-32 sm:h-44">
+        <div className="flex items-start gap-6 sm:gap-10 h-32 sm:h-44 w-full">
             {/* LARGE ANIMATED LOGO - Resting on the border */}
             <div className="relative group cursor-pointer overflow-hidden shrink-0 h-full flex items-end">
                 <AnimatedTrasto
@@ -16,22 +17,31 @@ const Header = ({ searchTerm, setSearchTerm }) => (
             </div>
 
             {/* GREETING + SEARCH STACK - Centered vertically */}
-            <div className="flex flex-col gap-1 flex-1 min-w-[200px] sm:min-w-[400px] mt-6 sm:mt-10">
+            <div className="flex flex-col gap-1 flex-1 mt-6 sm:mt-10">
                 <h1 className="text-2xl sm:text-4xl font-black text-white leading-tight tracking-tighter">
                     <span className="text-white/40 font-black mr-2 text-base sm:text-lg uppercase tracking-widest">Hola,</span>
                     MILE
                 </h1>
 
-                {/* SEARCH INTEGRATED IN HEADER */}
-                <div className="relative group w-full mt-2">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white" strokeWidth={3} />
-                    <input
-                        type="text"
-                        placeholder="Buscar"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full bg-white/5 border border-white/5 text-white placeholder:text-white/20 focus:bg-white/10 transition-all rounded-[15px] py-3 pl-12 pr-4 outline-none text-sm"
-                    />
+                {/* SEARCH + FACTURES BUTTON ROW */}
+                <div className="flex items-center gap-4 mt-2">
+                    <div className="relative group flex-1">
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white" strokeWidth={3} />
+                        <input
+                            type="text"
+                            placeholder="Buscar"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="w-full bg-white/5 border border-white/5 text-white placeholder:text-white/20 focus:bg-white/10 transition-all rounded-[15px] py-3 pl-12 pr-4 outline-none text-sm"
+                        />
+                    </div>
+                    <button
+                        onClick={onOpenInvoices}
+                        className="bg-white/10 hover:bg-white/20 border border-white/10 px-6 py-3 rounded-[15px] text-white font-black text-xs uppercase tracking-widest transition-all active:scale-95 shadow-lg flex items-center gap-2 shrink-0"
+                    >
+                        <FileText className="w-4 h-4" />
+                        <span className="hidden sm:inline">Factures</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -44,8 +54,9 @@ const App = () => {
     const [searchTerm, setSearchTerm] = useState('')
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [editingClient, setEditingClient] = useState(null)
+    const [isInvoicesViewOpen, setIsInvoicesViewOpen] = useState(false)
 
-    const { clients, loading, saveClient, saveInvoice, uploadClientFile, deleteClient, deleteInvoice, fetchInvoices, getLatestInvoiceNumber } = useClients(searchTerm)
+    const { clients, loading, saveClient, saveInvoice, uploadClientFile, deleteClient, deleteInvoice, fetchInvoices, fetchInvoicesWithClients, getLatestInvoiceNumber } = useClients(searchTerm)
 
     const handleSave = async (data, stayOpen = false) => {
         const result = await saveClient(data)
@@ -109,6 +120,7 @@ const App = () => {
                 <Header
                     searchTerm={searchTerm}
                     setSearchTerm={setSearchTerm}
+                    onOpenInvoices={() => setIsInvoicesViewOpen(true)}
                 />
 
                 <main className="px-4 py-4 sm:px-10 sm:py-6 flex-1 overflow-y-auto">
@@ -192,6 +204,15 @@ const App = () => {
                     onDeleteInvoice={handleDeleteInvoice}
                     fetchInvoices={fetchInvoices}
                     getLatestInvoiceNumber={getLatestInvoiceNumber}
+                />
+            )}
+
+            {isInvoicesViewOpen && (
+                <InvoicesView
+                    isOpen={isInvoicesViewOpen}
+                    onClose={() => setIsInvoicesViewOpen(false)}
+                    fetchInvoicesWithClients={fetchInvoicesWithClients}
+                    onDeleteInvoice={handleDeleteInvoice}
                 />
             )}
         </div>

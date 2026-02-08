@@ -1,82 +1,79 @@
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 
-export const generateInvoicePDF = async (client, data) => {
-    const doc = jsPDF()
-
+const applyInvoiceTemplate = (doc, client, data, startY = 0) => {
     // --- COLORS & STYLES ---
     const primaryColor = [41, 87, 115] // #295773 - Canine Blue
     const accentColor = [211, 118, 101] // #D37665 - Terracotta
     const greyColor = [100, 100, 100]
-    const lightGrey = [245, 245, 245]
 
     // --- HEADER: BRANDING ---
     doc.setFont('helvetica', 'bold')
     doc.setFontSize(24)
     doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2])
-    doc.text('Milena González', 14, 25)
+    doc.text('Milena González', 14, startY + 25)
 
     // --- INVOICE DETAILS ---
     doc.setFont('helvetica', 'bold')
     doc.setFontSize(12)
     doc.setTextColor(0, 0, 0)
-    doc.text('FACTURA', 196, 25, { align: 'right' })
+    doc.text('FACTURA', 196, startY + 25, { align: 'right' })
 
     doc.setFont('helvetica', 'normal')
     doc.setFontSize(10)
-    doc.text(`${data.numFactura || '25-' + Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`, 196, 32, { align: 'right' })
-    const dateObj = new Date(data.fecha || Date.now())
+    doc.text(`${data.num_factura || data.numFactura || '25-' + Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`, 196, startY + 32, { align: 'right' })
+    const dateObj = new Date(data.fecha_emision || data.fecha || Date.now())
     const dd = String(dateObj.getDate()).padStart(2, '0')
     const mm = String(dateObj.getMonth() + 1).padStart(2, '0')
     const yyyy = dateObj.getFullYear()
-    doc.text(`${dd}/${mm}/${yyyy}`, 196, 38, { align: 'right' })
+    doc.text(`${dd}/${mm}/${yyyy}`, 196, startY + 38, { align: 'right' })
 
     // --- PARTIES INFO ---
     doc.setDrawColor(primaryColor[0], primaryColor[1], primaryColor[2])
     doc.setLineWidth(0.5)
-    doc.line(14, 45, 196, 45)
+    doc.line(14, startY + 45, 196, startY + 45)
 
     // FROM (Milena)
     doc.setFontSize(9)
     doc.setTextColor(greyColor[0], greyColor[1], greyColor[2])
-    doc.text('DE:', 14, 62)
+    doc.text('DE:', 14, startY + 62)
 
     doc.setFontSize(10)
     doc.setFont('helvetica', 'bold')
     doc.setTextColor(0, 0, 0)
-    doc.text('Milena González Villacampa', 14, 68)
+    doc.text('Milena González Villacampa', 14, startY + 68)
 
     doc.setFont('helvetica', 'normal')
     doc.setFontSize(9)
-    doc.text('NIF 46355789W', 14, 73)
-    doc.text('Travessera de Gràcia, 421, 5-1', 14, 78)
-    doc.text('08025 Barcelona', 14, 83)
+    doc.text('NIF 46355789W', 14, startY + 73)
+    doc.text('Travessera de Gràcia, 421, 5-1', 14, startY + 78)
+    doc.text('08025 Barcelona', 14, startY + 83)
 
     // TO (Client)
     doc.setFontSize(9)
     doc.setFont('helvetica', 'normal')
     doc.setTextColor(greyColor[0], greyColor[1], greyColor[2])
-    doc.text('PER A:', 196, 62, { align: 'right' })
+    doc.text('PER A:', 196, startY + 62, { align: 'right' })
 
     doc.setFont('helvetica', 'bold')
     doc.setTextColor(0, 0, 0)
     const displayName = client.raon_social || client.nombre_propietario || 'Client Name'
-    doc.text(displayName, 196, 68, { align: 'right' })
+    doc.text(displayName, 196, startY + 68, { align: 'right' })
 
     doc.setFont('helvetica', 'normal')
     doc.setFontSize(9)
     if (client.raon_social && client.nombre_propietario) {
-        doc.text(`Attn: ${client.nombre_propietario}`, 196, 73, { align: 'right' })
-        if (client.dni_nif) doc.text(`NIF: ${client.dni_nif}`, 196, 78, { align: 'right' })
+        doc.text(`Attn: ${client.nombre_propietario}`, 196, startY + 73, { align: 'right' })
+        if (client.dni_nif) doc.text(`NIF: ${client.dni_nif}`, 196, startY + 78, { align: 'right' })
         if (client.direccion) {
             const addrLines = doc.splitTextToSize(client.direccion, 70)
-            doc.text(addrLines, 196, 83, { align: 'right' })
+            doc.text(addrLines, 196, startY + 83, { align: 'right' })
         }
     } else {
-        if (client.dni_nif) doc.text(`NIF: ${client.dni_nif}`, 196, 73, { align: 'right' })
+        if (client.dni_nif) doc.text(`NIF: ${client.dni_nif}`, 196, startY + 73, { align: 'right' })
         if (client.direccion) {
             const addrLines = doc.splitTextToSize(client.direccion, 70)
-            doc.text(addrLines, 196, 78, { align: 'right' })
+            doc.text(addrLines, 196, startY + 78, { align: 'right' })
         }
     }
 
@@ -91,7 +88,7 @@ export const generateInvoicePDF = async (client, data) => {
         ])
 
     doc.autoTable({
-        startY: 110,
+        startY: startY + 110,
         head: [['Concepte', 'Quantitat', 'Preu', 'Subtotal']],
         body: tableBody,
         theme: 'plain',
@@ -126,7 +123,8 @@ export const generateInvoicePDF = async (client, data) => {
     const finalY = doc.lastAutoTable.finalY + 15
     const subtotal = data.items.reduce((acc, item) => acc + (parseFloat(item.precio) * parseFloat(item.cantidad) || 0), 0)
     const iva = subtotal * 0.21
-    const irpf = data.ambIRPF ? subtotal * 0.15 : 0
+    const ambIRPF = data.amb_irpf || data.ambIRPF
+    const irpf = ambIRPF ? subtotal * 0.15 : 0
     const total = subtotal + iva - irpf
 
     doc.setFontSize(10)
@@ -141,7 +139,7 @@ export const generateInvoicePDF = async (client, data) => {
     doc.text('IVA (21%):', 170, currentY, { align: 'right' })
     doc.text(`${iva.toFixed(2)}€`, 196, currentY, { align: 'right' })
 
-    if (data.ambIRPF) {
+    if (ambIRPF) {
         currentY += 7
         doc.text('IRPF (-15%):', 170, currentY, { align: 'right' })
         doc.text(`-${irpf.toFixed(2)}€`, 196, currentY, { align: 'right' })
@@ -162,6 +160,24 @@ export const generateInvoicePDF = async (client, data) => {
     doc.setFont('helvetica', 'italic')
     doc.setTextColor(180, 180, 180)
     doc.text('Gràcies per la teva confiança.', 105, 280, { align: 'center' })
+}
+
+export const generateInvoicePDF = async (client, data) => {
+    const doc = jsPDF()
+    applyInvoiceTemplate(doc, client, data)
+    return doc.output('blob')
+}
+
+export const generateMonthlyArchivePDF = async (monthName, invoices) => {
+    const doc = jsPDF()
+
+    invoices.forEach((invoice, index) => {
+        if (index > 0) doc.addPage()
+
+        // When fetching with clients, clients data is in invoice.clientes
+        const clientData = invoice.clientes || {}
+        applyInvoiceTemplate(doc, clientData, invoice)
+    })
 
     return doc.output('blob')
 }
