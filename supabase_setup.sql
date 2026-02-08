@@ -27,7 +27,9 @@ CREATE TABLE IF NOT EXISTS public.facturas (
     monto DECIMAL(10, 2) NOT NULL,
     concepto TEXT,
     items JSONB DEFAULT '[]'::jsonb,
-    pdf_url TEXT
+    pdf_url TEXT,
+    num_factura TEXT,
+    amb_irpf BOOLEAN DEFAULT false
 );
 
 -- Enable RLS

@@ -191,6 +191,7 @@ const App = () => {
                     onDelete={handleDeleteClient}
                     onDeleteInvoice={handleDeleteInvoice}
                     fetchInvoices={fetchInvoices}
+                    getLatestInvoiceNumber={getLatestInvoiceNumber}
                 />
             )}
         </div>

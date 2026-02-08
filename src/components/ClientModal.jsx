@@ -41,7 +41,7 @@ const AvatarSelectorModal = ({ isOpen, onClose, currentAvatar, onSelect }) => {
     )
 }
 
-export const ClientModal = ({ isOpen, onClose, client, onSave, onEmitInvoice, onUploadFile, onDelete, onDeleteInvoice, fetchInvoices }) => {
+export const ClientModal = ({ isOpen, onClose, client, onSave, onEmitInvoice, onUploadFile, onDelete, onDeleteInvoice, fetchInvoices, getLatestInvoiceNumber }) => {
     const [isInvoiceWizardOpen, setIsInvoiceWizardOpen] = useState(false)
     const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false)
     const [isSavingNewClient, setIsSavingNewClient] = useState(false)
@@ -445,6 +445,7 @@ export const ClientModal = ({ isOpen, onClose, client, onSave, onEmitInvoice, on
                     }}
                     client={client}
                     onEmit={onEmitInvoice}
+                    getLatestInvoiceNumber={getLatestInvoiceNumber}
                 />
             )}
             {showInvoiceDeleteConfirm && (

@@ -122,29 +122,38 @@ export const generateInvoicePDF = async (client, data) => {
 
     // --- TOTALS SECTION ---
     const finalY = doc.lastAutoTable.finalY + 15
-    const subtotal = data.items.reduce((acc, item) => acc + (parseFloat(item.precio) * parseFloat(item.cantidad)), 0)
+    const subtotal = data.items.reduce((acc, item) => acc + (parseFloat(item.precio) * parseFloat(item.cantidad) || 0), 0)
     const iva = subtotal * 0.21
-    const total = subtotal + iva
+    const irpf = data.ambIRPF ? subtotal * 0.15 : 0
+    const total = subtotal + iva - irpf
 
     doc.setFontSize(10)
     doc.setFont('helvetica', 'normal')
     doc.setTextColor(greyColor[0], greyColor[1], greyColor[2])
 
-    doc.text('BASE IMPONIBLE:', 170, finalY, { align: 'right' })
-    doc.text(`${subtotal.toFixed(2)}€`, 196, finalY, { align: 'right' })
+    let currentY = finalY
+    doc.text('BASE IMPONIBLE:', 170, currentY, { align: 'right' })
+    doc.text(`${subtotal.toFixed(2)}€`, 196, currentY, { align: 'right' })
 
-    doc.text('IVA (21%):', 170, finalY + 7, { align: 'right' })
-    doc.text(`${iva.toFixed(2)}€`, 196, finalY + 7, { align: 'right' })
+    currentY += 7
+    doc.text('IVA (21%):', 170, currentY, { align: 'right' })
+    doc.text(`${iva.toFixed(2)}€`, 196, currentY, { align: 'right' })
+
+    if (data.ambIRPF) {
+        currentY += 7
+        doc.text('IRPF (-15%):', 170, currentY, { align: 'right' })
+        doc.text(`-${irpf.toFixed(2)}€`, 196, currentY, { align: 'right' })
+    }
 
     doc.setDrawColor(0, 0, 0)
     doc.setLineWidth(0.5)
-    doc.line(140, finalY + 11, 196, finalY + 11)
+    doc.line(140, currentY + 4, 196, currentY + 4)
 
     doc.setFontSize(14)
     doc.setFont('helvetica', 'bold')
     doc.setTextColor(0, 0, 0)
-    doc.text('TOTAL:', 170, finalY + 20, { align: 'right' })
-    doc.text(`${total.toFixed(2)}€`, 196, finalY + 20, { align: 'right' })
+    doc.text('TOTAL:', 170, currentY + 13, { align: 'right' })
+    doc.text(`${total.toFixed(2)}€`, 196, currentY + 13, { align: 'right' })
 
     // --- FOOTER ---
     doc.setFontSize(9)

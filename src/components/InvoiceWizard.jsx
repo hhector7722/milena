@@ -3,7 +3,7 @@ import { X, Check, FileText, Loader2, Save, Send, Download, Plus, Trash2, Calend
 import { generateInvoicePDF } from '../utils/invoiceGenerator'
 import { AnimatedTrasto } from './AnimatedTrasto'
 
-export const InvoiceWizard = ({ isOpen, onClose, onComplete, client, onEmit }) => {
+export const InvoiceWizard = ({ isOpen, onClose, onComplete, client, onEmit, getLatestInvoiceNumber }) => {
     const [step, setStep] = useState(1) // 1: Edit/Preview, 2: Success
     const [isGenerating, setIsGenerating] = useState(false)
     const [generatedBlob, setGeneratedBlob] = useState(null)
@@ -13,11 +13,34 @@ export const InvoiceWizard = ({ isOpen, onClose, onComplete, client, onEmit }) =
 
     const [invoiceData, setInvoiceData] = useState({
         fecha: new Date().toISOString().split('T')[0],
-        numFactura: `GC-${new Date().getFullYear()}-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`,
+        numFactura: '',
+        ambIRPF: false,
         items: [
-            { id: Date.now(), concepto: 'Servei de Perruqueria Canina', precio: '45.00', cantidad: '1' }
+            { id: Date.now(), concepto: '', precio: '', cantidad: '' }
         ]
     })
+
+    useEffect(() => {
+        const fetchNextNumber = async () => {
+            const latest = await getLatestInvoiceNumber()
+            const year = new Date().getFullYear().toString().slice(-2)
+            let nextNumber = '001'
+
+            if (latest) {
+                const parts = latest.split('-')
+                if (parts.length === 2 && parts[0] === year) {
+                    const currentNum = parseInt(parts[1])
+                    nextNumber = (currentNum + 1).toString().padStart(3, '0')
+                }
+            }
+
+            setInvoiceData(prev => ({
+                ...prev,
+                numFactura: `${year}-${nextNumber}`
+            }))
+        }
+        fetchNextNumber()
+    }, [getLatestInvoiceNumber])
 
     // Pre-filled data from client
     const clientInfo = {
@@ -62,7 +85,8 @@ export const InvoiceWizard = ({ isOpen, onClose, onComplete, client, onEmit }) =
 
     const subtotal = calculateSubtotal()
     const iva = subtotal * 0.21
-    const total = subtotal + iva
+    const irpf = invoiceData.ambIRPF ? subtotal * 0.15 : 0
+    const total = subtotal + iva - irpf
 
     const handleSave = async () => {
         setIsGenerating(true)
@@ -179,7 +203,26 @@ export const InvoiceWizard = ({ isOpen, onClose, onComplete, client, onEmit }) =
 
                             <section className="space-y-3 sm:space-y-5 bg-[#265471] p-6 sm:p-8 rounded-[28px] sm:rounded-[32px] shadow-xl border border-white/10">
                                 <h4 className="text-[9px] sm:text-[10px] font-black text-white uppercase tracking-[0.2em] border-b border-white/5 pb-3 sm:pb-4">Dades Generals</h4>
-                                <div className="grid grid-cols-2 lg:grid-cols-1 gap-4 sm:gap-5">
+
+                                <div className="space-y-1 sm:space-y-2">
+                                    <label className="text-[8px] sm:text-[9px] font-black text-white uppercase ml-1">Tipus de Factura</label>
+                                    <div className="flex bg-white/5 p-1 rounded-xl sm:rounded-2xl border border-white/10">
+                                        <button
+                                            onClick={() => setInvoiceData(prev => ({ ...prev, ambIRPF: false }))}
+                                            className={`flex-1 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-[9px] sm:text-[10px] font-black uppercase transition-all ${!invoiceData.ambIRPF ? 'bg-white text-[#265471] shadow-lg' : 'text-white/40 hover:text-white'}`}
+                                        >
+                                            Sense IRPF
+                                        </button>
+                                        <button
+                                            onClick={() => setInvoiceData(prev => ({ ...prev, ambIRPF: true }))}
+                                            className={`flex-1 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-[9px] sm:text-[10px] font-black uppercase transition-all ${invoiceData.ambIRPF ? 'bg-white text-[#265471] shadow-lg' : 'text-white/40 hover:text-white'}`}
+                                        >
+                                            Amb IRPF
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-2 lg:grid-cols-1 gap-4 sm:gap-5 mt-4">
                                     <div className="space-y-1 sm:space-y-2">
                                         <label className="text-[8px] sm:text-[9px] font-black text-white uppercase ml-1">Data</label>
                                         <input
@@ -335,6 +378,12 @@ export const InvoiceWizard = ({ isOpen, onClose, onComplete, client, onEmit }) =
                                                 <span>IVA (21%):</span>
                                                 <span>{iva.toFixed(2)}€</span>
                                             </div>
+                                            {invoiceData.ambIRPF && (
+                                                <div className="flex justify-between text-[11px] text-red-500 font-bold">
+                                                    <span>IRPF (-15%):</span>
+                                                    <span>-{irpf.toFixed(2)}€</span>
+                                                </div>
+                                            )}
                                             <div className="h-[1.5px] bg-black mt-4 mb-2" />
                                             <div className="flex justify-between text-xl font-black text-gray-900">
                                                 <span>TOTAL:</span>

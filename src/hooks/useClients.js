@@ -73,7 +73,9 @@ export const useClients = (searchTerm = '') => {
                     monto: invoiceData.items.reduce((acc, item) => acc + (parseFloat(item.precio) * parseFloat(item.cantidad) || 0), 0),
                     concepto: invoiceData.items[0]?.concepto || 'Servei Caní',
                     items: invoiceData.items,
-                    pdf_url: pdfUrl
+                    pdf_url: pdfUrl,
+                    num_factura: invoiceData.numFactura,
+                    amb_irpf: invoiceData.ambIRPF || false
                 })
 
             if (invoiceError) throw invoiceError
@@ -188,5 +190,23 @@ export const useClients = (searchTerm = '') => {
         }
     }
 
-    return { clients, loading, saveClient, saveInvoice, uploadClientFile, deleteClient, deleteInvoice, fetchInvoices }
+    const getLatestInvoiceNumber = async () => {
+        try {
+            const currentYear = new Date().getFullYear().toString().slice(-2)
+            const { data, error } = await supabase
+                .from('facturas')
+                .select('num_factura')
+                .like('num_factura', `${currentYear}-%`)
+                .order('num_factura', { ascending: false })
+                .limit(1)
+
+            if (error) throw error
+            return data[0]?.num_factura || null
+        } catch (error) {
+            console.error('Error fetching latest invoice number:', error.message)
+            return null
+        }
+    }
+
+    return { clients, loading, saveClient, saveInvoice, uploadClientFile, deleteClient, deleteInvoice, fetchInvoices, getLatestInvoiceNumber }
 }
