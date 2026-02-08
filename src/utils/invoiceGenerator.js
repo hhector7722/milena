@@ -81,12 +81,14 @@ export const generateInvoicePDF = async (client, data) => {
     }
 
     // --- LINE ITEMS TABLE ---
-    const tableBody = data.items.map(item => [
-        item.concepto,
-        item.cantidad,
-        `${parseFloat(item.precio).toFixed(2)}€`,
-        `${(parseFloat(item.precio) * parseFloat(item.cantidad)).toFixed(2)}€`
-    ])
+    const tableBody = data.items
+        .filter(item => item.concepto || item.precio || item.cantidad)
+        .map(item => [
+            item.concepto || 'Sense descripció',
+            item.cantidad || '0',
+            `${parseFloat(item.precio || 0).toFixed(2)}€`,
+            `${(parseFloat(item.precio || 0) * parseFloat(item.cantidad || 0)).toFixed(2)}€`
+        ])
 
     doc.autoTable({
         startY: 110,

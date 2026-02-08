@@ -355,10 +355,10 @@ export const InvoiceWizard = ({ isOpen, onClose, onComplete, client, onEmit, get
                                                 </tr>
                                             </thead>
                                             <tbody className="divide-y divide-gray-50/50">
-                                                {invoiceData.items.map((item) => (
+                                                {invoiceData.items.filter(item => item.concepto || item.precio || item.cantidad).map((item) => (
                                                     <tr key={item.id}>
                                                         <td className="py-3 text-[11px] font-semibold text-gray-900">{item.concepto || 'Sense descripció'}</td>
-                                                        <td className="py-3 text-[11px] text-gray-600 text-center">{item.cantidad}</td>
+                                                        <td className="py-3 text-[11px] text-gray-600 text-center">{item.cantidad || '0'}</td>
                                                         <td className="py-3 text-[11px] text-gray-600 text-right">{parseFloat(item.precio || 0).toFixed(2)}€</td>
                                                         <td className="py-3 text-[11px] font-black text-[#265471] text-right">{(parseFloat(item.precio || 0) * parseFloat(item.cantidad || 0)).toFixed(2)}€</td>
                                                     </tr>
@@ -379,7 +379,7 @@ export const InvoiceWizard = ({ isOpen, onClose, onComplete, client, onEmit, get
                                                 <span>{iva.toFixed(2)}€</span>
                                             </div>
                                             {invoiceData.ambIRPF && (
-                                                <div className="flex justify-between text-[11px] text-red-500 font-bold">
+                                                <div className="flex justify-between text-[11px] text-gray-500 font-bold">
                                                     <span>IRPF (-15%):</span>
                                                     <span>-{irpf.toFixed(2)}€</span>
                                                 </div>
