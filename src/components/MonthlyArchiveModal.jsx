@@ -85,42 +85,42 @@ export const MonthlyArchiveModal = ({ isOpen, onClose, invoices }) => {
 
             <div className="relative w-full max-w-2xl bg-white rounded-[40px] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-300">
                 {/* Header */}
-                <div className="px-8 py-6 border-b border-gray-100 flex items-center justify-between bg-white shrink-0">
+                <div className="px-6 py-4 sm:px-8 sm:py-6 border-b border-gray-100 flex items-center justify-between bg-white shrink-0">
                     <div>
-                        <h3 className="text-xl font-black text-gray-900 leading-none">Arxiu Mensual</h3>
-                        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-2">Generació de PDF Multifactura</p>
+                        <h3 className="text-lg sm:text-xl font-black text-gray-900 leading-none">Arxiu Mensual</h3>
+                        <p className="text-[9px] sm:text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1 sm:mt-2">Generació de PDF Multifactura</p>
                     </div>
-                    <button onClick={onClose} className="p-3 hover:bg-gray-100 rounded-2xl transition-all">
-                        <X className="w-6 h-6 text-gray-400" />
+                    <button onClick={onClose} className="p-2 sm:p-3 hover:bg-gray-100 rounded-2xl transition-all">
+                        <X className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400" />
                     </button>
                 </div>
 
-                <div className="flex-1 overflow-y-auto p-8 custom-scrollbar">
+                <div className="flex-1 overflow-y-auto p-4 sm:p-8 custom-scrollbar">
                     {step === 1 ? (
-                        <div className="space-y-8 animate-in slide-in-from-bottom-4 duration-500">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                <div className="space-y-3">
-                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Selecciona el Mes</label>
-                                    <div className="grid grid-cols-3 gap-2">
+                        <div className="space-y-4 sm:space-y-8 animate-in slide-in-from-bottom-4 duration-500">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                                <div className="space-y-2 sm:space-y-3">
+                                    <label className="text-[9px] sm:text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Selecciona el Mes</label>
+                                    <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
                                         {months.map((m, idx) => (
                                             <button
                                                 key={m}
                                                 onClick={() => setSelectedMonth(idx)}
-                                                className={`py-2.5 rounded-xl text-[10px] font-black uppercase transition-all shadow-sm ${selectedMonth === idx ? 'bg-[#2F5468] text-white shadow-lg' : 'bg-gray-50 text-gray-400 hover:bg-gray-100'}`}
+                                                className={`py-1.5 sm:py-2.5 rounded-xl text-[9px] sm:text-[10px] font-black uppercase transition-all shadow-sm ${selectedMonth === idx ? 'bg-[#2F5468] text-white shadow-lg' : 'bg-gray-50 text-gray-400 hover:bg-gray-100'}`}
                                             >
                                                 {m.slice(0, 3)}
                                             </button>
                                         ))}
                                     </div>
                                 </div>
-                                <div className="space-y-3">
-                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Selecciona l'Any</label>
-                                    <div className="space-y-2">
+                                <div className="space-y-2 sm:space-y-3">
+                                    <label className="text-[9px] sm:text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Selecciona l'Any</label>
+                                    <div className="grid grid-cols-5 sm:grid-cols-1 gap-1.5 sm:gap-2">
                                         {years.map(y => (
                                             <button
                                                 key={y}
                                                 onClick={() => setSelectedYear(y)}
-                                                className={`w-full py-3 rounded-xl text-xs font-black transition-all shadow-sm ${selectedYear === y ? 'bg-[#2F5468] text-white shadow-lg' : 'bg-gray-50 text-gray-400 hover:bg-gray-100'}`}
+                                                className={`py-2 sm:py-3 rounded-xl text-[10px] sm:text-xs font-black transition-all shadow-sm ${selectedYear === y ? 'bg-[#2F5468] text-white shadow-lg' : 'bg-gray-50 text-gray-400 hover:bg-gray-100'}`}
                                             >
                                                 {y}
                                             </button>
@@ -132,9 +132,9 @@ export const MonthlyArchiveModal = ({ isOpen, onClose, invoices }) => {
                             <button
                                 onClick={handleGenerate}
                                 disabled={isGenerating}
-                                className="w-full bg-[#D37665] text-white py-4 rounded-[24px] font-black text-sm uppercase tracking-widest shadow-xl flex items-center justify-center gap-3 hover:scale-[1.02] transition-all disabled:opacity-50"
+                                className="w-full bg-[#D37665] text-white py-3 sm:py-4 rounded-[20px] sm:rounded-[24px] font-black text-xs sm:text-sm uppercase tracking-widest shadow-xl flex items-center justify-center gap-2 sm:gap-3 hover:scale-[1.02] transition-all disabled:opacity-50"
                             >
-                                {isGenerating ? <Loader2 className="w-5 h-5 animate-spin" /> : <FileText className="w-5 h-5" />}
+                                {isGenerating ? <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" /> : <FileText className="w-4 h-4 sm:w-5 sm:h-5" />}
                                 Generar Arxiu Mensual
                             </button>
                         </div>
@@ -175,6 +175,6 @@ export const MonthlyArchiveModal = ({ isOpen, onClose, invoices }) => {
                     )}
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
