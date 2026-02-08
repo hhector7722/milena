@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Search, Filter, Calendar, User, FileText, ChevronRight, X, Download, Send, Loader2, Archive, Trash2 } from 'lucide-react'
 import { MonthlyArchiveModal } from './MonthlyArchiveModal'
 
@@ -13,6 +13,25 @@ export const InvoicesView = ({ isOpen, onClose, fetchInvoicesWithClients, onDele
         endDate: '',
         clientName: ''
     })
+    const filterPopupRef = useRef(null)
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (filterPopupRef.current && !filterPopupRef.current.contains(event.target)) {
+                setShowFilterPopup(false)
+            }
+        }
+
+        if (showFilterPopup) {
+            document.addEventListener('mousedown', handleClickOutside)
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
+    }, [showFilterPopup])
 
     useEffect(() => {
         if (isOpen) {
@@ -79,7 +98,7 @@ export const InvoicesView = ({ isOpen, onClose, fetchInvoicesWithClients, onDele
                         <span className="hidden sm:inline">Arxiu Mensual</span>
                     </button>
 
-                    <div className="relative">
+                    <div className="relative" ref={filterPopupRef}>
                         <button
                             onClick={() => isFilterActive ? clearFilters() : setShowFilterPopup(!showFilterPopup)}
                             className={`p-3 rounded-2xl transition-all shadow-lg active:scale-95 border border-white/10 ${isFilterActive ? 'bg-red-500 text-white' : 'bg-white/10 text-white hover:bg-white/20'}`}
