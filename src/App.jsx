@@ -45,7 +45,7 @@ const App = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [editingClient, setEditingClient] = useState(null)
 
-    const { clients, loading, saveClient, saveInvoice, uploadClientFile, deleteClient, deleteInvoice, fetchInvoices } = useClients(searchTerm)
+    const { clients, loading, saveClient, saveInvoice, uploadClientFile, deleteClient, deleteInvoice, fetchInvoices, getLatestInvoiceNumber } = useClients(searchTerm)
 
     const handleSave = async (data, stayOpen = false) => {
         const result = await saveClient(data)
