@@ -136,7 +136,7 @@ export const InvoicesView = ({ isOpen, onClose, fetchInvoicesWithClients, onDele
                                                 type="date"
                                                 value={filters.endDate}
                                                 onChange={(e) => setFilters(prev => ({ ...prev, endDate: e.target.value }))}
-                                                className="w-full bg-gray-50 border border-gray-100 rounded-xl py-2 px-3 text-[10px] font-bold outline-none focus:border-[#2F5468]"
+                                                className="w-full bg-gray-50 border border-gray-100 rounded-xl py-2 px-3 text-[10px] font-bold text-gray-900 outline-none focus:border-[#2F5468]"
                                             />
                                         </div>
                                     </div>
