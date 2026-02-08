@@ -201,26 +201,27 @@ export const InvoiceWizard = ({ isOpen, onClose, onComplete, client, onEmit, get
                         <div className={`w-full lg:w-[400px] flex-1 min-h-0 flex flex-col gap-4 sm:gap-6 overflow-y-auto custom-scrollbar shrink-0 transition-all duration-500
                             ${mobileView === 'edit' ? 'flex animate-in slide-in-from-left-8' : 'hidden lg:flex'}`}>
 
+                            {/* Floating IRPF Toggle */}
+                            <div className="space-y-1 sm:space-y-2 mb-2">
+                                <label className="text-[8px] sm:text-[9px] font-black text-white/60 uppercase tracking-widest ml-1">Tipus de Factura</label>
+                                <div className="flex bg-white/5 p-1 rounded-xl sm:rounded-2xl border border-white/10 backdrop-blur-md">
+                                    <button
+                                        onClick={() => setInvoiceData(prev => ({ ...prev, ambIRPF: false }))}
+                                        className={`flex-1 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-[9px] sm:text-[10px] font-black uppercase transition-all ${!invoiceData.ambIRPF ? 'bg-white text-[#265471] shadow-lg' : 'text-white/40 hover:text-white'}`}
+                                    >
+                                        Sense IRPF
+                                    </button>
+                                    <button
+                                        onClick={() => setInvoiceData(prev => ({ ...prev, ambIRPF: true }))}
+                                        className={`flex-1 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-[9px] sm:text-[10px] font-black uppercase transition-all ${invoiceData.ambIRPF ? 'bg-white text-[#265471] shadow-lg' : 'text-white/40 hover:text-white'}`}
+                                    >
+                                        Amb IRPF
+                                    </button>
+                                </div>
+                            </div>
+
                             <section className="space-y-3 sm:space-y-5 bg-[#265471] p-6 sm:p-8 rounded-[28px] sm:rounded-[32px] shadow-xl border border-white/10">
                                 <h4 className="text-[9px] sm:text-[10px] font-black text-white uppercase tracking-[0.2em] border-b border-white/5 pb-3 sm:pb-4">Dades Generals</h4>
-
-                                <div className="space-y-1 sm:space-y-2">
-                                    <label className="text-[8px] sm:text-[9px] font-black text-white uppercase ml-1">Tipus de Factura</label>
-                                    <div className="flex bg-white/5 p-1 rounded-xl sm:rounded-2xl border border-white/10">
-                                        <button
-                                            onClick={() => setInvoiceData(prev => ({ ...prev, ambIRPF: false }))}
-                                            className={`flex-1 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-[9px] sm:text-[10px] font-black uppercase transition-all ${!invoiceData.ambIRPF ? 'bg-white text-[#265471] shadow-lg' : 'text-white/40 hover:text-white'}`}
-                                        >
-                                            Sense IRPF
-                                        </button>
-                                        <button
-                                            onClick={() => setInvoiceData(prev => ({ ...prev, ambIRPF: true }))}
-                                            className={`flex-1 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-[9px] sm:text-[10px] font-black uppercase transition-all ${invoiceData.ambIRPF ? 'bg-white text-[#265471] shadow-lg' : 'text-white/40 hover:text-white'}`}
-                                        >
-                                            Amb IRPF
-                                        </button>
-                                    </div>
-                                </div>
 
                                 <div className="grid grid-cols-2 lg:grid-cols-1 gap-4 sm:gap-5 mt-4">
                                     <div className="space-y-1 sm:space-y-2">
@@ -275,7 +276,7 @@ export const InvoiceWizard = ({ isOpen, onClose, onComplete, client, onEmit, get
                                                         value={item.cantidad}
                                                         onChange={(e) => updateItem(item.id, 'cantidad', e.target.value)}
                                                         className="w-full bg-white border border-gray-100 rounded-xl sm:rounded-2xl py-2.5 sm:py-3.5 px-2 text-[10px] sm:text-xs font-black text-gray-900 outline-none text-center focus:border-[#265471] shadow-sm"
-                                                        placeholder="Ct."
+                                                        placeholder="Quantitat"
                                                     />
                                                 </div>
                                                 <div className="flex-[2] relative">
