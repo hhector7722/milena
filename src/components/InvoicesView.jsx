@@ -98,7 +98,7 @@ export const InvoicesView = ({ isOpen, onClose, fetchInvoicesWithClients, onDele
                                             value={filters.clientName}
                                             onChange={(e) => setFilters(prev => ({ ...prev, clientName: e.target.value }))}
                                             placeholder="Buscar per nom..."
-                                            className="w-full bg-gray-50 border border-gray-100 rounded-xl py-2 px-4 text-xs font-bold outline-none focus:border-[#2F5468]"
+                                            className="w-full bg-gray-50 border border-gray-100 rounded-xl py-2 px-4 text-xs font-bold text-gray-900 outline-none focus:border-[#2F5468]"
                                         />
                                     </div>
                                     <div className="grid grid-cols-2 gap-3">
@@ -108,7 +108,7 @@ export const InvoicesView = ({ isOpen, onClose, fetchInvoicesWithClients, onDele
                                                 type="date"
                                                 value={filters.startDate}
                                                 onChange={(e) => setFilters(prev => ({ ...prev, startDate: e.target.value }))}
-                                                className="w-full bg-gray-50 border border-gray-100 rounded-xl py-2 px-3 text-[10px] font-bold outline-none focus:border-[#2F5468]"
+                                                className="w-full bg-gray-50 border border-gray-100 rounded-xl py-2 px-3 text-[10px] font-bold text-gray-900 outline-none focus:border-[#2F5468]"
                                             />
                                         </div>
                                         <div className="space-y-1.5">
