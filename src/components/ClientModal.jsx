@@ -230,7 +230,7 @@ export const ClientModal = ({ isOpen, onClose, client, onSave, onEmitInvoice, on
                         </div>
                     </div>
 
-                    <div className="flex-1 overflow-hidden px-4 pt-1 sm:px-8 sm:pt-12 sm:pb-6 flex flex-col gap-2 sm:gap-3">
+                    <div className="flex-1 overflow-hidden px-4 pt-1 sm:px-8 sm:pt-6 sm:pb-4 flex flex-col gap-2 sm:gap-3">
                         {showHistory ? (
                             <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar space-y-2 animate-in fade-in slide-in-from-right-10 duration-500">
                                 {invoices.length === 0 ? (
@@ -281,8 +281,8 @@ export const ClientModal = ({ isOpen, onClose, client, onSave, onEmitInvoice, on
                                     <form onSubmit={handleSubmit} className="h-full space-y-2">
                                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-3">
                                             {/* Combined Card 1 & 2 */}
-                                            <div className="bg-white/5 border border-white/10 rounded-[20px] sm:rounded-[24px] p-3 sm:p-4 shadow-xl space-y-2">
-                                                <h4 className="text-[8px] sm:text-[10px] font-black text-white/40 uppercase tracking-[0.2em] border-b border-white/5 pb-1.5 sm:pb-2">Identitat i Contacte</h4>
+                                            <div className="bg-white/5 border border-white/10 rounded-[20px] sm:rounded-[24px] p-2.5 sm:p-3 shadow-xl space-y-1.5">
+                                                <h4 className="text-[7px] sm:text-[8px] font-black text-white/40 uppercase tracking-[0.2em] border-b border-white/5 pb-1 sm:pb-1.5">Identitat i Contacte</h4>
                                                 <div className="grid grid-cols-2 gap-2 sm:gap-3">
                                                     <div className="space-y-1 col-span-2">
                                                         <label className="text-[8px] sm:text-[9px] font-black text-white uppercase tracking-widest ml-1">Propietari</label>
@@ -304,8 +304,8 @@ export const ClientModal = ({ isOpen, onClose, client, onSave, onEmitInvoice, on
                                             </div>
 
                                             {/* Card 2: Ubicació i Facturació */}
-                                            <div className="bg-white/5 border border-white/10 rounded-[20px] sm:rounded-[24px] p-3 sm:p-4 shadow-xl space-y-2">
-                                                <h4 className="text-[8px] sm:text-[10px] font-black text-white/40 uppercase tracking-[0.2em] border-b border-white/5 pb-1.5 sm:pb-2">Ubicació i Facturació</h4>
+                                            <div className="bg-white/5 border border-white/10 rounded-[20px] sm:rounded-[24px] p-2.5 sm:p-3 shadow-xl space-y-1.5">
+                                                <h4 className="text-[7px] sm:text-[8px] font-black text-white/40 uppercase tracking-[0.2em] border-b border-white/5 pb-1 sm:pb-1.5">Ubicació i Facturació</h4>
                                                 <div className="grid grid-cols-1 gap-2 sm:gap-3">
                                                     <div className="space-y-1">
                                                         <label className="text-[8px] sm:text-[9px] font-black text-white uppercase tracking-widest ml-1">Raó Social</label>
