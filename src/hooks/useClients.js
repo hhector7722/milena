@@ -56,7 +56,13 @@ export const useClients = (searchTerm = '') => {
     const saveInvoice = async (clientId, invoiceData, pdfBlob) => {
         try {
             // 1. Upload PDF to Storage
-            const fileName = `invoice_${clientId}_${Date.now()}.pdf`
+            const invoiceDate = new Date(invoiceData.fecha)
+            const year = invoiceDate.getFullYear()
+            const month = String(invoiceDate.getMonth() + 1).padStart(2, '0')
+
+            // Format: invoices/2026/02/invoice_25-001_1707600000.pdf
+            const fileName = `${year}/${month}/invoice_${invoiceData.numFactura}_${Date.now()}.pdf`
+
             const { data: storageData, error: storageError } = await supabase.storage
                 .from('invoices')
                 .upload(fileName, pdfBlob)
@@ -75,7 +81,8 @@ export const useClients = (searchTerm = '') => {
                     items: invoiceData.items,
                     pdf_url: pdfUrl,
                     num_factura: invoiceData.numFactura,
-                    amb_irpf: invoiceData.ambIRPF || false
+                    amb_irpf: invoiceData.ambIRPF || false,
+                    fecha_emision: invoiceData.fecha
                 })
 
             if (invoiceError) throw invoiceError
@@ -83,7 +90,7 @@ export const useClients = (searchTerm = '') => {
             // 3. Update Client last service date
             const { error: clientError } = await supabase
                 .from('clientes')
-                .update({ ultimo_servicio: new Date().toISOString() })
+                .update({ ultimo_servicio: invoiceDate.toISOString() })
                 .eq('id', clientId)
 
             if (clientError) throw clientError
